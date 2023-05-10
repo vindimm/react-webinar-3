@@ -26,3 +26,14 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+/**
+ * Создание уникального ID
+ * @returns {Function}
+ */
+export function createCounter() {
+  let id = 1;
+  return function() {
+    return id++;
+  }
+}
