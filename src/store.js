@@ -45,7 +45,7 @@ class Store {
   addItem(code) {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code, title: 'Новая запись'}]
+      list: [...this.state.list, {code, counter: 0, title: 'Новая запись'}]
     })
   };
 
@@ -69,6 +69,9 @@ class Store {
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
+          if (!item.selected) {
+            item.counter += 1;
+          }
           item.selected = !item.selected;
         } else {
           item.selected = false;

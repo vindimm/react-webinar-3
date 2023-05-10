@@ -8,13 +8,13 @@ const generateId = createCounter();
 
 const store = new Store({
   list: [
-    {code: generateId(), title: 'Название элемента'},
-    {code: generateId(), title: 'Некий объект'},
-    {code: generateId(), title: 'Заголовок'},
-    {code: generateId(), title: 'Очень длинное название элемента из семи слов'},
-    {code: generateId(), title: 'Запись'},
-    {code: generateId(), title: 'Шестая запись'},
-    {code: generateId(), title: 'Седьмая запись'},
+    {code: generateId(), counter: 0, title: 'Название элемента'},
+    {code: generateId(), counter: 0, title: 'Некий объект'},
+    {code: generateId(), counter: 0, title: 'Заголовок'},
+    {code: generateId(), counter: 0, title: 'Очень длинное название элемента из семи слов'},
+    {code: generateId(), counter: 0, title: 'Запись'},
+    {code: generateId(), counter: 0, title: 'Шестая запись'},
+    {code: generateId(), counter: 0, title: 'Седьмая запись'},
   ]
 });
 
