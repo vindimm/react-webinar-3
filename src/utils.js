@@ -28,7 +28,8 @@ export function createElement(name, props = {}, ...children) {
 }
 
 /**
- * Создание уникального ID
+ * Результат вызова createCounter() - это функция-генератор-ID, ее можно сохранить в переменную.
+ * При каждом вызове этой функции-генератора-ID будет возвращаться число, на 1 больше предыдущего.
  * @returns {Function}
  */
 export function createCounter() {
@@ -36,20 +37,4 @@ export function createCounter() {
   return function() {
     return id++;
   }
-}
-
-/**
- * Принимает число и возвращает строку вида "N раз" в правильном падеже
- * @param amount {Number}
- * @returns {String}
- */
-export function getAmount(amount){
-  const lastDigit = amount % 10;
-  const twoLastDigits = amount % 100;
-
-  if ([2, 3, 4].includes(lastDigit) && !([12, 13, 14].includes(twoLastDigits))) {
-    return `${amount} раза`;
-  }
-
-  return `${amount} раз`;
 }

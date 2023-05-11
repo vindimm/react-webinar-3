@@ -1,24 +1,24 @@
 import React from 'react';
-import {createElement, getAmount} from './utils.js';
+import plural from 'plural-ru';
+import {createElement} from './utils.js';
 import './styles.css';
 
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
- * @param generateId {Function} Функция, возвращающая уникальный id
  * @returns {React.ReactElement}
  */
-function App({store, generateId}) {
+function App({store}) {
 
   const list = store.getState().list;
-
+  
   return (
     <div className='App'>
       <div className='App-head'>
         <h1>Приложение на чистом JS</h1>
       </div>
       <div className='App-controls'>
-        <button onClick={() => store.addItem(generateId())}>Добавить</button>
+        <button onClick={() => store.addItem()}>Добавить</button>
       </div>
       <div className='App-center'>
         <div className='List'>{
@@ -28,7 +28,11 @@ function App({store, generateId}) {
                    onClick={() => store.selectItem(item.code)}>
                 <div className='Item-code'>{item.code}</div>
                 <div className='Item-title'>{item.title}</div>
-                {item.counter > 0 ? <div className='Item-counter'>{`|\u00A0\u00A0выделяли ${getAmount(item.counter)}`}</div> : ''}
+                {item.selectionsCounter > 0 ?
+                  <div className='Item-counter'>
+                    {`|\u00A0\u00A0Выделяли ${item.selectionsCounter} ${plural(item.selectionsCounter, 'раз', 'раза', 'раз')}`}
+                  </div> :
+                  ''}
                 <div className='Item-actions'>
                   <button onClick={(evt) => {
                     evt.stopPropagation();
