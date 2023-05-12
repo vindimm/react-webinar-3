@@ -2,10 +2,11 @@
  * Хранилище состояния приложения
  */
 class Store {
-  constructor(initState = {}, generatorId) {
+  constructor(initState = {list: []}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.generatorId = generatorId;
+    // Если в state не будет элементов, то maxCode будет равен нулю
+    this.state.maxCode = Math.max(...this.state.list.map(item => item.code), 0);
   }
 
   /**
@@ -42,10 +43,11 @@ class Store {
   /**
    * Добавление новой записи
    */
-  addItem(code) {
+  addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.generatorId(), selectionsCounter: 0, title: 'Новая запись'}]
+      maxCode: this.state.maxCode + 1,
+      list: [...this.state.list, {code: this.state.maxCode + 1, selectionsCounter: 0, title: 'Новая запись'}]
     })
   };
 

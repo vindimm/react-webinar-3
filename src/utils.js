@@ -26,15 +26,3 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
-
-/**
- * Результат вызова createCounter() - это функция-генератор-ID, ее можно сохранить в переменную.
- * При каждом вызове этой функции-генератора-ID будет возвращаться число, на 1 больше предыдущего.
- * @returns {Function}
- */
-export function createCounter() {
-  let id = 1;
-  return function() {
-    return id++;
-  }
-}

@@ -1,25 +1,20 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import {createElement, createCounter} from './utils.js';
+import {createElement} from './utils.js';
 import App from './app.js';
 import Store from './store.js';
 
-const generatorId = createCounter();
-
-const store = new Store(
-  {
-    list: [
-      {code: generatorId(), selectionsCounter: 0, title: 'Название элемента'},
-      {code: generatorId(), selectionsCounter: 0, title: 'Некий объект'},
-      {code: generatorId(), selectionsCounter: 0, title: 'Заголовок'},
-      {code: generatorId(), selectionsCounter: 0, title: 'Очень длинное название элемента из семи слов'},
-      {code: generatorId(), selectionsCounter: 0, title: 'Запись'},
-      {code: generatorId(), selectionsCounter: 0, title: 'Шестая запись'},
-      {code: generatorId(), selectionsCounter: 0, title: 'Седьмая запись'},
-    ],
-  },
-  generatorId
-);
+const store = new Store({
+  list: [
+    {code: 1, selectionsCounter: 0, title: 'Название элемента'},
+    {code: 2, selectionsCounter: 0, title: 'Некий объект'},
+    {code: 3, selectionsCounter: 0, title: 'Заголовок'},
+    {code: 4, selectionsCounter: 0, title: 'Очень длинное название элемента из семи слов'},
+    {code: 5, selectionsCounter: 0, title: 'Запись'},
+    {code: 6, selectionsCounter: 0, title: 'Шестая запись'},
+    {code: 17, selectionsCounter: 0, title: 'Седьмая запись'},
+  ]
+});
 
 const root = createRoot(document.getElementById('root'));
 
