@@ -12,7 +12,7 @@ const store = new Store({
     {code: 4, selectionsCounter: 0, title: 'Очень длинное название элемента из семи слов'},
     {code: 5, selectionsCounter: 0, title: 'Запись'},
     {code: 6, selectionsCounter: 0, title: 'Шестая запись'},
-    {code: 17, selectionsCounter: 0, title: 'Седьмая запись'},
+    {code: 7, selectionsCounter: 0, title: 'Седьмая запись'},
   ]
 });
 
