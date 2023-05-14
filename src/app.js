@@ -11,7 +11,7 @@ import './styles.css';
 function App({store}) {
 
   const list = store.getState().list;
-  
+
   return (
     <div className='App'>
       <div className='App-head'>
@@ -27,12 +27,10 @@ function App({store}) {
               <div className={'Item' + (item.selected ? ' Item_selected' : '')}
                    onClick={() => store.selectItem(item.code)}>
                 <div className='Item-code'>{item.code}</div>
-                <div className='Item-title'>{item.title}</div>
-                {item.selectionsCounter > 0 ?
-                  <div className='Item-counter'>
-                    {`|\u00A0\u00A0Выделяли ${item.selectionsCounter} ${plural(item.selectionsCounter, 'раз', 'раза', 'раз')}`}
-                  </div> :
-                  ''}
+                <div className='Item-title'>
+                  {item.title}
+                  {item.selectionsCounter > 0 && ` | Выделяли ${item.selectionsCounter} ${plural(item.selectionsCounter, 'раз', 'раза', 'раз')}`}
+                </div>
                 <div className='Item-actions'>
                   <button onClick={(evt) => {
                     evt.stopPropagation();
