@@ -1,5 +1,3 @@
-import {generateCode} from "./utils";
-
 /**
  * Хранилище состояния приложения
  */
@@ -41,46 +39,37 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Открытие модалки с корзиной
    */
-  addItem() {
+  openCart() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
+      isCartOpen: true
     })
   };
 
   /**
-   * Удаление записи по коду
-   * @param code
+   * Закрытие модалки с корзиной
    */
-  deleteItem(code) {
+  closeCart() {
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
+      isCartOpen: false
     })
   };
-
+ 
   /**
-   * Выделение записи по коду
-   * @param code
+   * Добавление товара в корзину по его коду
+   * @param code {number}
    */
-  selectItem(code) {
+  addInCart(code) {
+    const currentProductAmount = this.state.cartProducts.find((item) => item.code === code)?.amount || 0;
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
-      })
+      cartProducts: [
+        ...this.state.cartProducts.filter(item => item.code !== code),
+        {code, amount: currentProductAmount + 1}
+      ]
     })
   }
 }

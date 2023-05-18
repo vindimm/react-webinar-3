@@ -13,7 +13,9 @@ const store = new Store({
     {code: generateCode(), title: 'Телефон iPhone XIXV', price: 120000},
     {code: generateCode(), title: 'Карандаши цветные', price: 111},
     {code: generateCode(), title: 'Товар сюрприз', price: 0},
-  ]
+  ],
+  cartProducts: [], // {id: number, amount: number}[]
+  isCartOpen: false
 });
 
 const root = createRoot(document.getElementById('root'));
