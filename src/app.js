@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
@@ -11,24 +11,24 @@ import Cart from "./components/cart";
  * @returns {React.ReactElement}
  */
 function App({store}) {
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const list = store.getState().list;
   const cartProductsAmount = store.getCartProductsAmount();
   const cartTotalPrice = store.getCartTotalPrice();
   const cartProductsList = store.getCartProductsList();
-  const isCartOpen = store.isCartOpen();
 
   const callbacks = {
     onCartOpen: useCallback(() => {
-     store.openCart();
+    setIsCartOpen(true);
      // для фиксированного фона под модалкой
      document.body.style.position = 'fixed'; 
-    }, [store]),
+    }, [isCartOpen, setIsCartOpen]),
 
     onCartClose: useCallback(() => {
-     store.closeCart();
+     setIsCartOpen(false);
      document.body.style.position = 'static';
-    }, [store]),
+    }, [isCartOpen, setIsCartOpen]),
 
     onCartAdd: useCallback((code) => {
       store.addInCart(code);

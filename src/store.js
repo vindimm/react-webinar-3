@@ -39,33 +39,6 @@ class Store {
   }
 
   /**
-   * Возвращает состояние модалки с корзиной
-   */
-  isCartOpen() {
-    return this.state.isCartOpen;
-  }
-
-  /**
-   * Открытие модалки с корзиной
-   */
-  openCart() {
-    this.setState({
-      ...this.state,
-      isCartOpen: true
-    })
-  };
-
-  /**
-   * Закрытие модалки с корзиной
-   */
-  closeCart() {
-    this.setState({
-      ...this.state,
-      isCartOpen: false
-    })
-  };
- 
-  /**
    * Добавление товара в корзину по его коду
    * @param code {number}
    */
