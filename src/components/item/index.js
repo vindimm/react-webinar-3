@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import './style.css';
+import { getFormattedPrice } from "../../utils";
 
 function Item(props){
 
@@ -17,7 +18,7 @@ function Item(props){
     <div className={'Item'}>
       <div className='Item-code'>{props.item.code}</div>
       <div className='Item-title'>{props.item.title}</div>
-      <div className='Item-price'>{`${props.item.price} ₽`}</div>
+      <div className='Item-price'>{getFormattedPrice(props.item.price)}</div>
       <div className='Item-actions'>
         <button onClick={() => callbacks.onCartAdd(props.item.code)}>Добавить</button>
       </div>

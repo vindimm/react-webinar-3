@@ -1,21 +1,29 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
+import { plural, getFormattedPrice } from '../../utils';
 
-function Controls({onCartOpen}){
+function Controls({totalPrice, productsAmount, onCartOpen}){
+  const cartInfo = productsAmount > 0 ?
+    `${productsAmount} ${plural(productsAmount, {one: 'продукт', few: 'продукта', many: 'продуктов'})} / ${getFormattedPrice(totalPrice)}` :
+    `пусто`;
+
   return (
     <div className='Controls'>
-      <div className='Controls-info'>В корзине: <b>пусто</b></div>
+      <div className='Controls-info'>В корзине: <b>{cartInfo}</b></div>
       <button onClick={onCartOpen}>Перейти</button>
     </div>
   )
 }
 
 Controls.propTypes = {
-  onCartOpen: PropTypes.func
+  productsNumber: PropTypes.number,
+  totalPrice: PropTypes.number,
+  onCartOpen: PropTypes.func,
 };
 
 Controls.defaultProps = {
+  cartTotal: {productsAmount: 0, totalPrice: 0},
   onCartOpen: () => {}
 }
 

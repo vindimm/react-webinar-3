@@ -72,6 +72,25 @@ class Store {
       ]
     })
   }
+
+  /**
+   * Получение общей стоимости товаров в корзине
+   * @returns {Number}
+   */
+  getCartTotalPrice() {
+    const totalPrice = this.state.cartProducts.reduce((accum, item) => {
+      return (this.state.list.find((product) => product.code === item.code)).price * item.amount + accum;
+    }, 0);
+    return totalPrice;
+  }
+
+  /**
+   * Получение общего кол-ва уникальных товаров в корзине
+   * @returns {Number}
+   */
+  getCartProductsAmount() {
+    return this.state.cartProducts.length;
+  }
 }
 
 export default Store;

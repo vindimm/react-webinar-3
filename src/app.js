@@ -12,16 +12,10 @@ import PageLayout from "./components/page-layout";
 function App({store}) {
 
   const list = store.getState().list;
+  const cartProductsAmount = store.getCartProductsAmount();
+  const cartTotalPrice = store.getCartTotalPrice();
 
   const callbacks = {
-    // onDeleteItem: useCallback((code) => {
-    //   store.deleteItem(code);
-    // }, [store]),
-
-    // onSelectItem: useCallback((code) => {
-    //   store.selectItem(code);
-    // }, [store]),
-
     onCartOpen: useCallback(() => {
      store.openCart();
     }, [store]),
@@ -34,10 +28,7 @@ function App({store}) {
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <Controls onCartOpen={callbacks.onCartOpen}/>
-      {/* <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/> */}
+      <Controls productsAmount={cartProductsAmount} totalPrice={cartTotalPrice} onCartOpen={callbacks.onCartOpen}/>
       <List list={list} onCartAdd={callbacks.onCartAdd}/>
     </PageLayout>
   );
