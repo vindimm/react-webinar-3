@@ -39,6 +39,13 @@ class Store {
   }
 
   /**
+   * Возвращает состояние модалки с корзиной
+   */
+  isCartOpen() {
+    return this.state.isCartOpen;
+  }
+
+  /**
    * Открытие модалки с корзиной
    */
   openCart() {
@@ -67,9 +74,20 @@ class Store {
     this.setState({
       ...this.state,
       cartProducts: [
-        ...this.state.cartProducts.filter(item => item.code !== code),
+        ...this.state.cartProducts.filter((item) => item.code !== code),
         {code, amount: currentProductAmount + 1}
       ]
+    })
+  }
+
+  /**
+   * Удаление товара из корзины по его коду
+   * @param code {number}
+   */
+  removeFromCart(code) {
+    this.setState({
+      ...this.state,
+      cartProducts: [...this.state.cartProducts.filter((item) => item.code !== code)]
     })
   }
 
@@ -79,7 +97,7 @@ class Store {
    */
   getCartTotalPrice() {
     const totalPrice = this.state.cartProducts.reduce((accum, item) => {
-      return (this.state.list.find((product) => product.code === item.code)).price * item.amount + accum;
+      return (this.state.list.find(product => product.code === item.code)).price * item.amount + accum;
     }, 0);
     return totalPrice;
   }
@@ -90,6 +108,19 @@ class Store {
    */
   getCartProductsAmount() {
     return this.state.cartProducts.length;
+  }
+
+  /**
+   * Получение списка товаров в корзине с полями title, code, price, amount
+   * @returns {Object[]}
+   */
+  getCartProductsList() {
+    const result = this.state.cartProducts.map((product) => {
+      const currentItem = this.state.list.find((item) => item.code === product.code);
+      return {...product, price: currentItem.price, title: currentItem.title}
+    });
+
+    return result;
   }
 }
 
