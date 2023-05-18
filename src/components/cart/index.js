@@ -6,7 +6,6 @@ import ModalLayout from "../modal-layout";
 import CartItem from "../cart-item";
 
 function Cart({products, totalPrice, onClose, onCartRemove}){
-
   const totalText = products.length > 0 ?
     (<><span className="Cart-result">Итого</span><span>{getFormattedPrice(totalPrice)}</span></>) :
     'Корзина пуста';

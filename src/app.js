@@ -21,10 +21,13 @@ function App({store}) {
   const callbacks = {
     onCartOpen: useCallback(() => {
      store.openCart();
+     // для фиксированного фона под модалкой
+     document.body.style.position = 'fixed'; 
     }, [store]),
 
     onCartClose: useCallback(() => {
      store.closeCart();
+     document.body.style.position = 'static';
     }, [store]),
 
     onCartAdd: useCallback((code) => {

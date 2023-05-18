@@ -4,10 +4,6 @@ import './style.css';
 import { getFormattedPrice } from "../../utils";
 
 function Item(props){
-
-  // Счётчик выделений
-  // const [count, setCount] = useState(0);
-
   const callbacks = {
     onCartAdd: () => {
       props.onCartAdd(props.item.code);
