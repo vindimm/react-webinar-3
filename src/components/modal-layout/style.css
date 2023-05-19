@@ -12,7 +12,7 @@
   margin: 150px auto 0 auto;
   padding-bottom: 20px;
   width: 960px;
-  min-height: 400px;
+  min-height: 360px;
 
   background-color: #ffffff;
   border-radius: 10px;
@@ -35,5 +35,5 @@
 
 .ModalLayout-content {
   padding-top: 70px;
-  padding-bottom: 70px;
+  padding-bottom: 50px;
 }
