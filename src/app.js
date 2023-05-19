@@ -4,6 +4,7 @@ import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Cart from "./components/cart";
+import Item from "./components/item";
 
 /**
  * Приложение
@@ -34,14 +35,18 @@ function App({store}) {
 
     onCartRemove: useCallback((code) => {
       store.removeFromCart(code);
-    }, [store])
+    }, [store]),
+
+    renderItem: useCallback((item) => {
+      return (<Item item={item} onCartAdd={callbacks.onCartAdd}/>);
+    }, []),
   }
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
       <Controls productsAmount={productsAmount} totalPrice={totalPrice} onCartOpen={callbacks.onCartOpen}/>
-      <List list={list} onCartAdd={callbacks.onCartAdd}/>
+      <List list={list} renderItem={callbacks.renderItem}/>
       {isCartOpen &&
         <Cart
           products={products}

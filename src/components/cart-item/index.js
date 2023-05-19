@@ -5,7 +5,7 @@ import { getFormattedPrice } from "../../utils";
 
 function CartItem({item, onCartRemove}){
   return (
-    <li className='CartItem'>
+    <div className='CartItem'>
       <span className='CartItem-code'>{item.code}</span>
       <span className='CartItem-title'>{item.title}</span>
       <span className='CartItem-price'>{getFormattedPrice(item.price)}</span>
@@ -13,7 +13,7 @@ function CartItem({item, onCartRemove}){
       <button className='CartItem-remove' onClick={() => onCartRemove(item.code)}>
         Удалить
       </button>
-    </li>
+    </div>
   );
 }
 

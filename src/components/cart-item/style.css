@@ -4,11 +4,6 @@
 
   padding: 20px;
   margin: 0;
-  border-bottom: 1px dashed #cccccc;
-}
-
-.CartItem:first-child {
-  border-top: 1px dashed #cccccc;
 }
 
 .CartItem-code {

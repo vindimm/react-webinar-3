@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 import './style.css';
 import { getFormattedPrice } from "../../utils";
 import ModalLayout from "../modal-layout";
+import List from "../list";
 import CartItem from "../cart-item";
 
 function Cart({products, totalPrice, onClose, onCartRemove}){
@@ -10,11 +11,15 @@ function Cart({products, totalPrice, onClose, onCartRemove}){
     (<><span className="Cart-result">Итого</span><span>{getFormattedPrice(totalPrice)}</span></>) :
     'Корзина пуста';
 
+  const callbacks = {
+    renderItem: useCallback((item) => {
+      return (<CartItem item={item} onCartRemove={onCartRemove}/>);
+    }, []),
+  }
+  
   return (
     <ModalLayout title={'Корзина'} onClose={onClose}>
-      <ul className="Cart-list">
-        {products.map((product) => <CartItem item={product} onCartRemove={onCartRemove} key={product.code} />)}
-      </ul>
+      <List renderItem={callbacks.renderItem} list={products} />
       <div className="Cart-total">
         <b>{totalText}</b>
       </div>

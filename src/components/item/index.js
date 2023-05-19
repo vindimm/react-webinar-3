@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 import './style.css';
 import { getFormattedPrice } from "../../utils";
 
-function Item(props){
+function Item({item, onCartAdd}){
   const callbacks = {
     onCartAdd: () => {
-      props.onCartAdd(props.item.code);
+      onCartAdd(item.code);
     }
   }
 
   return (
     <div className={'Item'}>
-      <div className='Item-code'>{props.item.code}</div>
-      <div className='Item-title'>{props.item.title}</div>
-      <div className='Item-price'>{getFormattedPrice(props.item.price)}</div>
+      <div className='Item-code'>{item.code}</div>
+      <div className='Item-title'>{item.title}</div>
+      <div className='Item-price'>{getFormattedPrice(item.price)}</div>
       <div className='Item-actions'>
-        <button onClick={() => callbacks.onCartAdd(props.item.code)}>Добавить</button>
+        <button onClick={() => callbacks.onCartAdd(item.code)}>Добавить</button>
       </div>
     </div>
   );
@@ -28,6 +28,7 @@ Item.propTypes = {
     title: PropTypes.string,
     price: PropTypes.number,
   }).isRequired,
+  onCartAdd: PropTypes.func,
 };
 
 Item.defaultProps = {
