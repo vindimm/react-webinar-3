@@ -5,7 +5,7 @@ import { plural, getFormattedPrice } from '../../utils';
 
 function Controls({totalPrice, productsAmount, onCartOpen}){
   const cartInfo = productsAmount > 0 ?
-    `${productsAmount} ${plural(productsAmount, {one: 'продукт', few: 'продукта', many: 'продуктов'})} / ${getFormattedPrice(totalPrice)}` :
+    `${productsAmount} ${plural(productsAmount, {one: 'товар', few: 'товара', many: 'товаров'})} / ${getFormattedPrice(totalPrice)}` :
     `пусто`;
 
   return (
