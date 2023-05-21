@@ -17,7 +17,9 @@ function List({ list, renderItem }) {
 
 List.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number
+    code: PropTypes.number,
+    title: PropTypes.string,
+    price: PropTypes.number,
   })).isRequired,
   renderItem: PropTypes.func.isRequired,
 };
