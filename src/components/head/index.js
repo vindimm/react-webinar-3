@@ -11,7 +11,11 @@ function Head({title}){
 }
 
 Head.propTypes = {
-  title: PropTypes.node,
+  title: PropTypes.string,
 };
+
+Head.defaultProps = {
+  title: '',
+}
 
 export default memo(Head);

@@ -17,7 +17,7 @@ function Item(props){
   return (
     <div className={cn()}>
       <div className={cn('title')}>
-        <Link to={AppRoute.Product.replace(':id', props.item.order)} className={cn('titleLink')}>
+        <Link to={AppRoute.Product.replace(':id', props.item._id)} className={cn('titleLink')}>
           {props.item.title}
         </Link>
       </div>
