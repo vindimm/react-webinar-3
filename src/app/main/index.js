@@ -1,10 +1,12 @@
 import {memo, useCallback, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {PRODUCTS_PER_PAGE} from '../../const';
+import {AppRoute, PRODUCTS_PER_PAGE} from '../../const';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
+import Container from "../../components/container";
 import BasketTool from "../../components/basket-tool";
+import Navigation from "../../components/navigation";
 import List from "../../components/list";
 import Pagination from "../../components/pagination";
 import useStore from "../../store/use-store";
@@ -42,10 +44,14 @@ function Main() {
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}/>
+      <Container justify="spacebetween">
+        <Navigation/>
+        <BasketTool  onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+      </Container>
       <List list={select.list} renderItem={renders.item}/>
-      <Pagination currentPage={Number(page) || 1} productsCount={select.productsCount}/>
+      <Container justify="flexend">
+        <Pagination currentPage={Number(page) || 1} productsCount={select.productsCount}/>
+      </Container>
     </PageLayout>
   );
 }

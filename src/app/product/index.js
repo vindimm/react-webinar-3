@@ -2,8 +2,10 @@ import {memo, useEffect, useCallback} from "react";
 import {useParams} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
-import BasketTool from "../../components/basket-tool";
 import ProductContent from "../../components/product-content";
+import Navigation from "../../components/navigation";
+import BasketTool from "../../components/basket-tool";
+import Container from "../../components/container";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 
@@ -37,7 +39,10 @@ function Product() {
   return (
     <PageLayout>
       <Head title={select.title}/>
-      <BasketTool sum={select.sum} amount={select.amount} onOpen={callbacks.openModalBasket}/>
+      <Container justify="spacebetween">
+        <Navigation/>
+        <BasketTool  onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+      </Container>
       <ProductContent product={select.product} onAdd={callbacks.addToBasket}/>
     </PageLayout>
   );
