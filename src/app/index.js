@@ -4,7 +4,7 @@ import {AppRoute} from "../const";
 import Main from "./main";
 import Basket from "./basket";
 import Product from "./product";
-import useStore from "../store/use-store";
+import PageNotFound from "../components/page-not-found";
 import useSelector from "../store/use-selector";
 
 /**
@@ -21,6 +21,7 @@ function App() {
         <Route path={AppRoute.Main} element={<Main/>}/>
         <Route path={AppRoute.Catalog} element={<Main/>}/>
         <Route path={AppRoute.Product} element={<Product/>}/>
+        <Route path="*" element={<PageNotFound/>}/>
       </Routes>
       {activeModal === 'basket' && <Basket/>}
     </>
