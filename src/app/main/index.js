@@ -44,9 +44,18 @@ function Main() {
     }, [callbacks.addToBasket, select.lang]),
   };
 
+  const dict = {
+    rus: {
+      shop: 'Магазин',
+    },
+    eng: {
+      shop: 'Shop',
+    }
+  }
+
   return (
     <PageLayout>
-      <Head lang={select.lang} onChange={callbacks.changeLanguage}/>
+      <Head title={dict[select.lang].shop} lang={select.lang} onChange={callbacks.changeLanguage}/>
       <Container justify="spacebetween">
         <Navigation lang={select.lang}/>
         <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>

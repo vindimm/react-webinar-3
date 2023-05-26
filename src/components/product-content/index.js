@@ -30,6 +30,7 @@ function ProductContent({product, lang, onAdd}) {
   };
 
   return (
+    product &&
     <div className={cn()}>
       <p className={cn('desc')}>{product?.description}</p>
       <p className={cn('country')}>{dict[lang].country}: <b>{product?.madeIn.title} ({product?.madeIn.code})</b></p>

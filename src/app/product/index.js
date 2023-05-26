@@ -1,6 +1,7 @@
 import {memo, useEffect, useCallback} from "react";
 import {useParams} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
+import Loader from "../../components/loader";
 import Head from "../../components/head";
 import ProductContent from "../../components/product-content";
 import Navigation from "../../components/navigation";
@@ -27,6 +28,7 @@ function Product() {
     sum: state.basket.sum,
     product: state.product.item,
     title: state.product.item?.title,
+    loading: state.product.loading,
     lang: state.language.language,
   }));
 
@@ -46,7 +48,9 @@ function Product() {
         <Navigation lang={select.lang}/>
         <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>
       </Container>
-      <ProductContent product={select.product} onAdd={callbacks.addToBasket} lang={select.lang}/>
+      <Loader loading={select.loading}>
+        <ProductContent product={select.product} onAdd={callbacks.addToBasket} lang={select.lang}/>
+      </Loader>
     </PageLayout>
   );
 }
