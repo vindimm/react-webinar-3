@@ -5,6 +5,7 @@ import ModalLayout from "../../components/modal-layout";
 import BasketTotal from "../../components/basket-total";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
+import { AppRoute } from '../../const';
 
 function Basket() {
 
@@ -29,6 +30,7 @@ function Basket() {
       return (
       <ItemBasket
         item={item}
+        address={AppRoute.Product.replace(':id', item._id)}
         onRemove={callbacks.removeFromBasket}
         onClose={callbacks.closeModal}
         text={dict[select.lang].remove}

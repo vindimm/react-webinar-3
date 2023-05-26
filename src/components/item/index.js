@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import {numberFormat} from "../../utils";
-import {AppRoute} from "../../const";
 import './style.css';
 
 function Item(props){
@@ -26,9 +25,11 @@ function Item(props){
   return (
     <div className={cn()}>
       <div className={cn('title')}>
-        <Link to={AppRoute.Product.replace(':id', props.item._id)} className={cn('titleLink')}>
-          {props.item.title}
-        </Link>
+        {
+          props.address ?
+            <Link to={props.address} className={cn('titleLink')}>{props.item.title}</Link> :
+            <span className={cn('titleSpan')}>{props.item.title}</span>
+        }
       </div>
       <div className={cn('actions')}>
         <div className={cn('price')}>{numberFormat(props.item.price)} ₽</div>
@@ -39,6 +40,7 @@ function Item(props){
 }
 
 Item.propTypes = {
+  address: PropTypes.string,
   lang: PropTypes.oneOf(['rus', 'eng']),
   item: PropTypes.shape({
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

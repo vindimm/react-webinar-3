@@ -4,7 +4,6 @@ import propTypes from 'prop-types';
 import {numberFormat} from "../../utils";
 import {cn as bem} from "@bem-react/classname";
 import PropTypes from "prop-types";
-import {AppRoute} from '../../const';
 import './style.css';
 
 function ItemBasket(props) {
@@ -19,9 +18,11 @@ function ItemBasket(props) {
   return (
     <div className={cn()}>
       <div className={cn('title')}>
-        <Link to={AppRoute.Product.replace(':id', props.item._id)} className={cn('titleLink')} onClick={callbacks.onClose}>
-          {props.item.title}
-        </Link>
+        {
+          props.address ? 
+          <Link className={cn('titleLink')} to={props.address} onClick={callbacks.onClose}>{props.item.title}</Link> :
+          <span className={cn('titleSpan')}>{props.item.title}</span>
+        }
       </div>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
@@ -33,6 +34,7 @@ function ItemBasket(props) {
 }
 
 ItemBasket.propTypes = {
+  address: PropTypes.string,
   text: PropTypes.string,
   item: PropTypes.shape({
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

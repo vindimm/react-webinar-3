@@ -1,6 +1,6 @@
 import {memo, useCallback, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {PRODUCTS_PER_PAGE} from '../../const';
+import {AppRoute, PRODUCTS_PER_PAGE} from '../../const';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
@@ -40,8 +40,14 @@ function Main() {
 
   const renders = {
     item: useCallback((item, lang) => {
-      return <Item item={item} onAdd={callbacks.addToBasket} lang={select.lang}/>
-    }, [callbacks.addToBasket, select.lang]),
+      return (
+        <Item
+          item={item}
+          onAdd={callbacks.addToBasket}
+          address={AppRoute.Product.replace(':id', item._id)}
+          lang={select.lang}
+        />)
+      }, [callbacks.addToBasket, select.lang]),
   };
 
   const dict = {
@@ -57,7 +63,7 @@ function Main() {
     <PageLayout>
       <Head title={dict[select.lang].shop} lang={select.lang} onChange={callbacks.changeLanguage}/>
       <Container justify="spacebetween">
-        <Navigation lang={select.lang}/>
+        <Navigation adress={AppRoute.Main} lang={select.lang}/>
         <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>
       </Container>
       <List list={select.list} renderItem={renders.item} lang={select.lang}/>
