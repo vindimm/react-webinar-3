@@ -1,6 +1,7 @@
 export const AppRoute = {
   Main: '/',
-  Catalog: '/catalog/:page',
+  RootCatalog: '/catalog',
+  Catalog: '/catalog?page=:page',
   Product: '/product/:id',
 }
 

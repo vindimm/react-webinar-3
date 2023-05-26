@@ -10,14 +10,16 @@ class Catalog extends StoreModule {
 
   initState() {
     return {
+      page: 1,
+      count: null,
       list: []
     }
   }
 
   /**
    * Загрузка данных (id, title, price, count) с пагинацией
-   * @param page Номер страницы
-   * @param PRODUCTS_PER_PAGE Количество товаров на странице
+   * @param {String} page Номер страницы
+   * @param {Number} PRODUCTS_PER_PAGE Количество товаров на странице
    */
   async load(page, PRODUCTS_PER_PAGE) {
     const response =
@@ -27,9 +29,21 @@ class Catalog extends StoreModule {
     
     this.setState({
        ...this.getState(),
+       page: Number(page),
+       count: json.result.count,
        list: json.result.items,
-       count: json.result.count
     }, 'Загружены товары из АПИ');
+  }
+
+  /**
+   * Установка новой страницы в каталоге
+   * @param {Number} page Номер страницы
+   */
+  setPage(page) {
+    this.setState({
+      ...this.getState(),
+      page
+    }, `Выбрана страница номер ${page}`);
   }
 }
 

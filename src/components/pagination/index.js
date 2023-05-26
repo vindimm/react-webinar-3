@@ -6,7 +6,7 @@ import {getPaginationPages} from "../../utils";
 import {AppRoute, PRODUCTS_PER_PAGE} from "../../const";
 import './style.css';
 
-function Pagination({currentPage, productsCount}) {
+function Pagination({currentPage, productsCount, onPageChange}) {
 
   const cn = bem('Pagination');
   const lastPage = Math.ceil(productsCount / PRODUCTS_PER_PAGE);
@@ -14,17 +14,18 @@ function Pagination({currentPage, productsCount}) {
 
   return (
     <ul className={cn()}>
-      {pages.map((item) =>
-        item > 0 ?
-        (<li className={cn('item')} key={item}>
+      {pages.map((page) =>
+        page > 0 ?
+        (<li className={cn('item')} key={page}>
           <Link
-            to={AppRoute.Catalog.replace(':page', `${item}`)}
-            className={item === currentPage ? cn('link', {active: true}) : cn('link')}
+            to={AppRoute.Catalog.replace(':page', `${page}`)}
+            className={page === currentPage ? cn('link', {active: true}) : cn('link')}
+            onClick={() => onPageChange(page)}
           >
-            {item}
+            {page}
           </Link>
         </li>) :
-        (<li className={cn('item')} key={item}>...</li>) 
+        (<li className={cn('item')} key={page}>...</li>) 
       )}
     </ul>
   );
@@ -33,6 +34,7 @@ function Pagination({currentPage, productsCount}) {
 Pagination.propTypes = {
   currentPage: PropTypes.number,
   productsCount: PropTypes.number,
+  onPageChange: PropTypes.func.isRequired,
 }
 
 Pagination.defaultTypes = {

@@ -1,5 +1,4 @@
 import {memo, useCallback, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
 import {AppRoute, PRODUCTS_PER_PAGE} from '../../const';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
@@ -15,19 +14,19 @@ import useSelector from "../../store/use-selector";
 function Main() {
 
   const store = useStore();
-  const { page } = useParams();
-
-  useEffect(() => {
-    store.actions.catalog.load(page, PRODUCTS_PER_PAGE);
-  }, [page, PRODUCTS_PER_PAGE]);
 
   const select = useSelector(state => ({
     list: state.catalog.list,
+    page: state.catalog.page,
     productsCount: state.catalog.count,
     amount: state.basket.amount,
     sum: state.basket.sum,
     lang: state.language.language,
   }));
+
+  useEffect(() => {
+    store.actions.catalog.load(select.page, PRODUCTS_PER_PAGE);
+  }, [select.page, PRODUCTS_PER_PAGE]);
 
   const callbacks = {
     // Добавление в корзину
@@ -36,6 +35,8 @@ function Main() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
 
     changeLanguage: useCallback((evt) => store.actions.language.setLanguage(evt.target.value), [store]),
+
+    changePage: useCallback((page) => store.actions.catalog.setPage(page), [store]),
   }
 
   const renders = {
@@ -68,7 +69,11 @@ function Main() {
       </Container>
       <List list={select.list} renderItem={renders.item} lang={select.lang}/>
       <Container justify="flexend">
-        <Pagination currentPage={Number(page) || 1} productsCount={select.productsCount}/>
+        <Pagination
+          currentPage={Number(select.page) || 1}
+          productsCount={select.productsCount}
+          onPageChange={callbacks.changePage}
+        />
       </Container>
     </PageLayout>
   );
