@@ -1,6 +1,6 @@
 import {memo, useCallback, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {AppRoute, PRODUCTS_PER_PAGE} from '../../const';
+import {PRODUCTS_PER_PAGE} from '../../const';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
@@ -25,7 +25,8 @@ function Main() {
     list: state.catalog.list,
     productsCount: state.catalog.count,
     amount: state.basket.amount,
-    sum: state.basket.sum
+    sum: state.basket.sum,
+    lang: state.language.language,
   }));
 
   const callbacks = {
@@ -33,22 +34,24 @@ function Main() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
+
+    changeLanguage: useCallback((evt) => store.actions.language.setLanguage(evt.target.value), [store]),
   }
 
   const renders = {
-    item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
-    }, [callbacks.addToBasket]),
+    item: useCallback((item, lang) => {
+      return <Item item={item} onAdd={callbacks.addToBasket} lang={select.lang}/>
+    }, [callbacks.addToBasket, select.lang]),
   };
 
   return (
     <PageLayout>
-      <Head title='Магазин'/>
+      <Head lang={select.lang} onChange={callbacks.changeLanguage}/>
       <Container justify="spacebetween">
-        <Navigation/>
-        <BasketTool  onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+        <Navigation lang={select.lang}/>
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>
       </Container>
-      <List list={select.list} renderItem={renders.item}/>
+      <List list={select.list} renderItem={renders.item} lang={select.lang}/>
       <Container justify="flexend">
         <Pagination currentPage={Number(page) || 1} productsCount={select.productsCount}/>
       </Container>

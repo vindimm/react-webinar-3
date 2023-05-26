@@ -27,6 +27,7 @@ function Product() {
     sum: state.basket.sum,
     product: state.product.item,
     title: state.product.item?.title,
+    lang: state.language.language,
   }));
 
   const callbacks = {
@@ -34,16 +35,18 @@ function Product() {
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Добавление товара в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+
+    changeLanguage: useCallback((evt) => store.actions.language.setLanguage(evt.target.value), [store]),
   }
 
   return (
     <PageLayout>
-      <Head title={select.title}/>
+      <Head title={select.title} lang={select.lang} onChange={callbacks.changeLanguage}/>
       <Container justify="spacebetween">
-        <Navigation/>
-        <BasketTool  onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+        <Navigation lang={select.lang}/>
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>
       </Container>
-      <ProductContent product={select.product} onAdd={callbacks.addToBasket}/>
+      <ProductContent product={select.product} onAdd={callbacks.addToBasket} lang={select.lang}/>
     </PageLayout>
   );
 }

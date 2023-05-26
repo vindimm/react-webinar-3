@@ -26,13 +26,14 @@ function ItemBasket(props) {
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
-        <div className={cn('cell')}><button onClick={callbacks.onRemove}>Удалить</button></div>
+        <div className={cn('cell')}><button onClick={callbacks.onRemove}>{props.text}</button></div>
       </div>
     </div>
   )
 }
 
 ItemBasket.propTypes = {
+  text: PropTypes.string,
   item: PropTypes.shape({
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     title: PropTypes.string,
@@ -44,6 +45,7 @@ ItemBasket.propTypes = {
 }
 
 ItemBasket.defaultProps = {
+  text: 'Удалить',
   onRemove: () => {},
   onClose: () => {},
 }

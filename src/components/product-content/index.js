@@ -4,7 +4,24 @@ import {cn as bem} from '@bem-react/classname';
 import {numberFormat} from "../../utils";
 import './style.css';
 
-function ProductContent({product, onAdd}) {
+const dict = {
+  rus: {
+    country: 'Страна производитель',
+    category: 'Категория',
+    year: 'Год выпуска',
+    price: 'Цена',
+    add: 'Добавить',
+  },
+  eng: {
+    country: 'Producing Country',
+    category: 'Category',
+    year: 'Year of producing',
+    price: 'Price',
+    add: 'Add',
+  }
+}
+
+function ProductContent({product, lang, onAdd}) {
   
   const cn = bem('ProductContent');
 
@@ -15,21 +32,23 @@ function ProductContent({product, onAdd}) {
   return (
     <div className={cn()}>
       <p className={cn('desc')}>{product?.description}</p>
-      <p className={cn('country')}>Страна производитель: <b>{product?.madeIn.title} ({product?.madeIn.code})</b></p>
-      <p className={cn('category')}>Категория: <b>{product?.category.title}</b></p>
-      <p className={cn('year')}>Год выпуска: <b>{product?.edition}</b></p>
-      <p className={cn('price')}>Цена:&nbsp;&nbsp;{numberFormat(product?.price)} ₽</p>
-      <button className={cn('addButton')} onClick={callbacks.onAdd}>Добавить</button>
+      <p className={cn('country')}>{dict[lang].country}: <b>{product?.madeIn.title} ({product?.madeIn.code})</b></p>
+      <p className={cn('category')}>{dict[lang].category}: <b>{product?.category.title}</b></p>
+      <p className={cn('year')}>{dict[lang].year}: <b>{product?.edition}</b></p>
+      <p className={cn('price')}>{dict[lang].price}:&nbsp;&nbsp;{numberFormat(product?.price)} ₽</p>
+      <button className={cn('addButton')} onClick={callbacks.onAdd}>{dict[lang].add}</button>
     </div>
   );
 }
 
 ProductContent.propTypes = {
+  lang: PropTypes.oneOf(['rus', 'eng']),
   product: PropTypes.object,
   onAdd: PropTypes.func.isRequired,
 };
 
 ProductContent.defaultProps = {
+  lang: 'rus',
   product: {}
 }
 

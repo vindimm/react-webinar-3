@@ -14,11 +14,11 @@ function Container({justify, children}) {
 }
 
 Container.propTypes = {
-  alignment: PropTypes.string
+  justify: PropTypes.oneOf(['flexstart', 'flexend', 'spacebetween']),
 };
 
 Container.defaultProps = {
-  alignment: 'start'
+  justify: 'start'
 }
 
 export default memo(Container);
