@@ -20,7 +20,6 @@ function Pagination({currentPage, productsCount, onPageChange}) {
           <Link
             to={AppRoute.Catalog.replace(':page', `${page}`)}
             className={page === currentPage ? cn('link', {active: true}) : cn('link')}
-            onClick={() => onPageChange(page)}
           >
             {page}
           </Link>
@@ -34,7 +33,6 @@ function Pagination({currentPage, productsCount, onPageChange}) {
 Pagination.propTypes = {
   currentPage: PropTypes.number,
   productsCount: PropTypes.number,
-  onPageChange: PropTypes.func.isRequired,
 }
 
 Pagination.defaultTypes = {

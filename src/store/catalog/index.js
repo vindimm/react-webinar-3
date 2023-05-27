@@ -23,27 +23,17 @@ class Catalog extends StoreModule {
    */
   async load(page, PRODUCTS_PER_PAGE) {
     const response =
-      await fetch(`/api/v1/articles?limit=${PRODUCTS_PER_PAGE}&skip=${(page - 1) * 10}&fields=items(_id, title, price),count`);
+      await fetch(`/api/v1/articles?limit=${PRODUCTS_PER_PAGE}&skip=${(page - 1) * PRODUCTS_PER_PAGE}
+        &fields=items(_id, title, price),count`);
     
     const json = await response.json();
     
     this.setState({
-       ...this.getState(),
-       page: Number(page),
-       count: json.result.count,
-       list: json.result.items,
-    }, 'Загружены товары из АПИ');
-  }
-
-  /**
-   * Установка новой страницы в каталоге
-   * @param {Number} page Номер страницы
-   */
-  setPage(page) {
-    this.setState({
       ...this.getState(),
-      page
-    }, `Выбрана страница номер ${page}`);
+      page: Number(page),
+      count: json.result.count,
+      list: json.result.items,
+    }, 'Загружены товары из АПИ');
   }
 }
 
