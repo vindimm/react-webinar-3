@@ -1,4 +1,4 @@
-import {memo, useEffect, useCallback} from "react";
+import {memo, useLayoutEffect, useCallback} from "react";
 import {useParams} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Loader from "../../components/loader";
@@ -15,7 +15,7 @@ function Product() {
   const store = useStore();
   let { id } = useParams();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     store.actions.product.load(id);
     // Очищаем store при демонтировании, чтобы при повторном открытии Product избежать мерцания старых данных
     return () => {
