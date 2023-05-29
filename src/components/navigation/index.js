@@ -14,23 +14,21 @@ const dictionary = {
   }
 }
 
-function Navigation({address, lang}) {
+function Navigation({lang}) {
   const cn = bem('Navigation');
 
   return (
     <div className={cn()}>
-      <Link to={address} className={cn('home')}>{dictionary[lang].main}</Link>
+      <Link to={AppRoute.Main} className={cn('home')}>{dictionary[lang].main}</Link>
     </div>
   );
 }
 
 Navigation.propTypes = {
-  address: PropTypes.string,
   lang: PropTypes.oneOf(['rus', 'eng']),
 };
 
 Navigation.defaultProps = {
-  address: AppRoute.Main,
   lang: 'rus',
 }
 

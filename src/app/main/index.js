@@ -66,7 +66,7 @@ function Main() {
     <PageLayout>
       <Head title={dict[select.lang].shop} lang={select.lang} onChange={callbacks.changeLanguage}/>
       <Container justify="spacebetween">
-        <Navigation adress={AppRoute.Main} lang={select.lang}/>
+        <Navigation lang={select.lang}/>
         <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>
       </Container>
       <List list={select.list} renderItem={renders.item} lang={select.lang}/>
