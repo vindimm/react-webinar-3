@@ -2,6 +2,7 @@ import {memo, useCallback, useMemo} from "react";
 import useTranslate from "../../hooks/use-translate";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
+import { getCategories } from "../../utils";
 import Select from "../../components/select";
 import Input from "../../components/input";
 import SideLayout from "../../components/side-layout";
@@ -28,10 +29,7 @@ function CatalogFilter() {
     onReset: useCallback(() => store.actions.catalog.resetParams(), [store]),
   };
 
-  let categoriesOptions = [];
-  if (select.categories) {
-    categoriesOptions = select.categories.map((category) => ({value: category._id, title: category.title}));
-  }
+  const categoriesOptions = getCategories(select.categories);
 
   const options = {
     sort: useMemo(() => ([

@@ -7,7 +7,7 @@ class CategoriesState extends StoreModule {
 
   initState() {
     return {
-      data: {},
+      items: [],
       waiting: false // признак ожидания загрузки
     }
   }
