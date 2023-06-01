@@ -10,7 +10,7 @@ import LocaleSelect from "../../containers/locale-select";
 import Head from "../../components/head";
 import Spinner from "../../components/spinner";
 import ArticleCard from "../../components/article-card";
-import ButtonLink from "../../components/button-link";
+import LoginMenu from "../../components/login-tools";
 
 function Article() {
   const store = useStore();
@@ -35,7 +35,7 @@ function Article() {
   }
 
   return (
-    <PageLayout head={<ButtonLink title={'Вход'} address={'/login'}/>}>
+    <PageLayout>
       <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>

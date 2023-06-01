@@ -3,12 +3,12 @@ import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
 import Navigation from "../../containers/navigation";
-import PageLayout from "../../components/page-layout";
-import Head from "../../components/head";
-import ButtonLink from "../../components/button-link";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
+import LoginMenu from '../../containers/login-menu';
+import PageLayout from "../../components/page-layout";
+import Head from "../../components/head";
 
 function Main() {
 
@@ -22,7 +22,8 @@ function Main() {
   const {t} = useTranslate();
 
   return (
-    <PageLayout head={<ButtonLink title={'Вход'} address={'/login'}/>}>
+    <PageLayout>
+      <LoginMenu/>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>

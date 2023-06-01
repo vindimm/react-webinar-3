@@ -1,0 +1,28 @@
+.LoginTools {
+  display: flex;
+  justify-content: end;
+
+  padding: 10px 20px;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.LoginTools-button {
+  margin-left: 20px;
+  padding: 3px 10px;
+  
+  color: #000000;
+  background-color: #efefef;
+  text-decoration: none;
+  border: 1px solid #767676;
+  border-radius: 2px;
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.LoginTools-button:hover {
+  background-color: #dedede;
+}
+
+.LoginTools-link {
+  color: #0087E9;
+}
