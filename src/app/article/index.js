@@ -4,12 +4,13 @@ import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
-import PageLayout from "../../components/page-layout";
-import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
+import PageLayout from "../../components/page-layout";
+import LocaleSelect from "../../containers/locale-select";
+import Head from "../../components/head";
 import Spinner from "../../components/spinner";
 import ArticleCard from "../../components/article-card";
-import LocaleSelect from "../../containers/locale-select";
+import ButtonLink from "../../components/button-link";
 
 function Article() {
   const store = useStore();
@@ -34,7 +35,7 @@ function Article() {
   }
 
   return (
-    <PageLayout>
+    <PageLayout head={<ButtonLink title={'Вход'} address={'/login'}/>}>
       <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>
