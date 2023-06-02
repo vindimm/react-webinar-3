@@ -1,5 +1,4 @@
 import {memo} from 'react';
-import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 import Navigation from "../../containers/navigation";
@@ -10,7 +9,6 @@ import Head from "../../components/head";
 import ProfileCard from "../../components/profile-card";
 
 function Profile() {
-  const store = useStore();
 
   const select = useSelector(state => ({
     user: state.login.user,

@@ -13,6 +13,7 @@ function LoginMenu() {
   const select = useSelector(state => ({
     status: state.login.status,
     userName: state.login?.user?.username,
+    waiting: state.login?.waiting,
   }));
 
   const callbacks = {
@@ -25,6 +26,7 @@ function LoginMenu() {
         isAuth={select.status === 'auth'}
         userName={select.userName}
         address={'/login'}
+        waiting={select.waiting}
         onLogout={callbacks.logout}
       />
     </SideLayout>

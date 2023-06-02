@@ -28,7 +28,7 @@ function App() {
         <Route path={''} element={<Main/>}/>
         <Route path={'/articles/:id'} element={<Article/>}/>
         <Route path={'/login'} element={<Login/>}/>
-        <Route path={'/profile'} element={<PrivateRoute><Profile/></PrivateRoute>}/>
+        <Route path={'/profile'} element={<PrivateRoute address={'/login'}><Profile/></PrivateRoute>}/>
       </Routes>
 
       {activeModal === 'basket' && <Basket/>}

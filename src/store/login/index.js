@@ -8,9 +8,10 @@ class LoginState extends StoreModule {
 
   initState() {
     return {
-      status: 'noAuth',
+      status: 'unknown',
       user: null,
-      error: null
+      error: null,
+      waiting: false
     }
   }
 
@@ -19,6 +20,12 @@ class LoginState extends StoreModule {
    * Авторизация пользователя
    */
   async login(data) {
+    // Установка признака ожидания загрузки
+    this.setState({
+      ...this.getState(),
+      waiting: true
+    });
+
     try {
       const response = await fetch(`/api/v1/users/sign`, {
         method: 'POST',
@@ -35,6 +42,7 @@ class LoginState extends StoreModule {
           status: 'auth',
           user: json.result.user,
           error: null,
+          waiting: false
         }, 'Авторизация прошла успешно');
 
         saveToken(json.result.token);
@@ -46,9 +54,10 @@ class LoginState extends StoreModule {
     } catch (err) {
       // Сохраняем данные об ошибке в стейт
       this.setState({
-        status: 'no_auth',
+        status: 'noAuth',
         user: null,
         error: err.message,
+        waiting: false
       }, 'Авторизация не удалась');
     }
   }
@@ -60,15 +69,22 @@ class LoginState extends StoreModule {
     const token = getToken();
 
     if (!token) {
-      // Нет токена - не делаем запрос. устанавливаем статус 'no_auth'
+      // Нет токена - не делаем запрос. устанавливаем статус 'noAuth'
       this.setState({
         ...this.getState(),
         status: 'noAuth',
         user: null,
+        waiting: false
       }, 'Проверка авторизации... status noAuth. нет токена');
 
     } else if (this.getState().status !== 'auth') {
       // Есть токен и стаутус равен 'noAuth' или 'unknown' - делаем запрос
+      // Установка признака ожидания загрузки
+      this.setState({
+        ...this.getState(),
+        waiting: true
+      });
+
       const response = await fetch(`/api/v1/users/self`, {
         method: 'GET',
         headers: {
@@ -85,6 +101,7 @@ class LoginState extends StoreModule {
           ...this.getState(),
           status: 'auth',
           user: json.result,
+          waiting: false,
           error: null
         }, 'Авторизация прошла успешно');
       } else {
@@ -93,6 +110,7 @@ class LoginState extends StoreModule {
           ...this.getState(),
           status: 'noAuth',
           user: null,
+          waiting: false
         }, 'Авторизация не удалась, ошибка запроса');
       }
     }
@@ -104,7 +122,7 @@ class LoginState extends StoreModule {
   async logout() {
     this.setState({
       ...this.getState(),
-      status: 'no_auth',
+      status: 'noAuth',
       user: null,
       error: null
     }, 'Авторизация сброшена');
