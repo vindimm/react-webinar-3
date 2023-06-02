@@ -7,7 +7,7 @@ class ArticleState extends StoreModule {
 
   initState() {
     return {
-      data: {},
+      data: null,
       waiting: false // признак ожидания загрузки
     }
   }
@@ -20,7 +20,7 @@ class ArticleState extends StoreModule {
   async load(id) {
     // Сброс текущего товара и установка признака ожидания загрузки
     this.setState({
-      data: {},
+      data: null,
       waiting: true
     });
 
@@ -38,10 +38,21 @@ class ArticleState extends StoreModule {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке
       this.setState({
-        data: {},
+        data: null,
         waiting: false
       });
     }
+  }
+
+  /**
+   * Очистка данных о товаре
+   */
+  reset() {
+    // Сброс текущего товара
+    this.setState({
+      data: null,
+      waiting: false
+    }, 'Сброшены данные о товаре');
   }
 }
 

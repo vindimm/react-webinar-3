@@ -1,4 +1,4 @@
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback, useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
@@ -22,6 +22,14 @@ function Article() {
     store.actions.article.load(params.id);
   }, [params.id]);
 
+  // Сбрасываем данные о товаре при демонтировании компонента,
+  // чтобы при следующем открытии страницы Article не происходило мерцания данных о прошлом товаре
+  useEffect(() => {
+    return () => {
+      store.actions.article.reset();
+    } 
+  }, []);
+
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
@@ -37,7 +45,7 @@ function Article() {
   return (
     <PageLayout>
       <LoginMenu/>
-      <Head title={select.article.title}>
+      <Head title={select.article?.title}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
