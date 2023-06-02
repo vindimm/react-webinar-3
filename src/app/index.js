@@ -8,6 +8,7 @@ import Article from "./article";
 import Login from "./login";
 import Profile from "./profile";
 import PrivateRoute from "../containers/private-route";
+import { getCategories } from "../utils/get-categories";
 
 /**
  * Приложение

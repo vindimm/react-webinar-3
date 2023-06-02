@@ -2,7 +2,7 @@ import {memo, useCallback, useMemo} from "react";
 import useTranslate from "../../hooks/use-translate";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
-import { getCategories } from "../../utils";
+import { getCategories } from "../../utils/get-categories";
 import Select from "../../components/select";
 import Input from "../../components/input";
 import SideLayout from "../../components/side-layout";
