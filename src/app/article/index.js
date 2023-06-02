@@ -5,12 +5,12 @@ import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
 import Navigation from "../../containers/navigation";
-import PageLayout from "../../components/page-layout";
+import LoginMenu from "../../containers/login-menu";
 import LocaleSelect from "../../containers/locale-select";
+import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import Spinner from "../../components/spinner";
 import ArticleCard from "../../components/article-card";
-import LoginMenu from "../../components/login-tools";
 
 function Article() {
   const store = useStore();
@@ -36,6 +36,7 @@ function Article() {
 
   return (
     <PageLayout>
+      <LoginMenu/>
       <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>

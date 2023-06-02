@@ -1,4 +1,5 @@
 import StoreModule from "../module";
+import {saveToken, getToken, dropToken} from "../token";
 
 /**
  * Детальная ифнормация о товаре для страницы товара
@@ -9,7 +10,8 @@ class LoginState extends StoreModule {
     return {
       status: 'noAuth',
       user: null,
-      token: null
+      token: null,
+      error: null
     }
   }
 
@@ -18,16 +20,8 @@ class LoginState extends StoreModule {
    * Авторизация пользователя
    */
   async login(data) {
-    // Сброс текущего пользователя
-    this.setState({
-      status: 'noAuth',
-      user: null,
-      token: null
-    });
-
     try {
-      const response = await fetch(`/api/v1/users/sign`,
-      {
+      const response = await fetch(`/api/v1/users/sign`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {'Content-Type': 'application/json'}
@@ -35,22 +29,102 @@ class LoginState extends StoreModule {
 
       const json = await response.json();
 
-      // Авторизация прошла успешно
-      this.setState({
-        status: 'auth',
-        user: json.result.user,
-        token: json.result.token
-      }, 'Загружен товар из АПИ');
+      if (response.status === 200) {
+        // Авторизация прошла успешно
+        this.setState({
+          ...this.getState(),
+          status: 'auth',
+          user: json.result.user,
+          error: null,
+        }, 'Авторизация прошла успешно');
 
-    } catch (e) {
-      // Ошибка при авторизации
-      // @todo В стейт можно положить информацию об ошибке
+        saveToken(json.result.token);
+      } else {
+        // При авторизации произошла ошибка
+        const errorMessage = json.error.data.issues[0].message;
+        throw new Error(errorMessage);
+      }
+    } catch (err) {
+      // Сохраняем данные об ошибке в стейт
       this.setState({
+        status: 'no_auth',
+        user: null,
+        error: err.message,
+      }, 'Авторизация не удалась');
+    }
+  }
+
+  /**
+   * Проверка авторизации
+   */
+  async checkAuth() {
+    const token = getToken();
+
+    if (!token) {
+      // Нет токена - не делаем запрос. устанавливаем статус 'no_auth'
+      this.setState({
+        ...this.getState(),
         status: 'noAuth',
         user: null,
-        token: null
+        token: null,
+      }, 'Проверка авторизации... status noAuth. нет токена');
+
+    } else if (this.getState().status !== 'auth') {
+      // Есть токен и стаутус равен 'noAuth' или 'unknown' - делаем запрос
+      const response = await fetch(`/api/v1/users/self`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Token': `${token}`
+        }
       });
+    
+      const json = await response.json();
+    
+      if (response.status === 200) {
+        // Авторизация прошла успешно
+        this.setState({
+          ...this.getState(),
+          status: 'auth',
+          user: json.result.user,
+          token: json.result.token,
+          error: null
+        }, 'Авторизация прошла успешно');
+      } else {
+        // Не получилось авторизоваться
+        this.setState({
+          ...this.getState(),
+          status: 'noAuth',
+          user: null,
+          token: null,
+        }, 'Авторизация не удалась, ошибка запроса');
+      }
     }
+  }
+
+  /**
+   * Сброс авторизации
+   */
+  async logout() {
+    this.setState({
+      ...this.getState(),
+      status: 'no_auth',
+      user: null,
+      token: null,
+      error: null
+    }, 'Авторизация сброшена');
+
+    const token = getToken();
+
+    await fetch(`/api/v1/users/sign`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Token': `${token}`
+      }
+    });
+
+    dropToken();
   }
 }
 

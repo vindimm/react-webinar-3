@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function LoginTools({isAuth, userName, address, t}) {
+function LoginTools({isAuth, userName, address, onLogout}) {
   const cn = bem('LoginTools');
 
   if (isAuth) {
     return (
       <>
         <Link className={cn('link')} to={'/profile'}>{userName}</Link>
-        <button className={cn('button')}>Выход</button>
+        <button className={cn('button')} onClick={onLogout}>Выход</button>
       </>
     )
   }
