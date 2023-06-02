@@ -14,3 +14,8 @@
   flex-direction: column;
   align-items: start;
 }
+
+.LoginForm-error {
+  margin: 12px 0;
+  color: #ff0000;
+}

@@ -18,6 +18,7 @@ function Login() {
   const select = useSelector(state => ({
     status: state.login.status,
     userName: state.login?.user?.username,
+    error: state.login.error,
   }));
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function Login() {
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <LoginForm onLogin={callbacks.login}/>
+      <LoginForm error={select.error} onLogin={callbacks.login}/>
     </PageLayout>
   );
 }

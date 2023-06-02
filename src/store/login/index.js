@@ -10,7 +10,6 @@ class LoginState extends StoreModule {
     return {
       status: 'noAuth',
       user: null,
-      token: null,
       error: null
     }
   }
@@ -66,7 +65,6 @@ class LoginState extends StoreModule {
         ...this.getState(),
         status: 'noAuth',
         user: null,
-        token: null,
       }, 'Проверка авторизации... status noAuth. нет токена');
 
     } else if (this.getState().status !== 'auth') {
@@ -80,14 +78,13 @@ class LoginState extends StoreModule {
       });
     
       const json = await response.json();
-    
+
       if (response.status === 200) {
         // Авторизация прошла успешно
         this.setState({
           ...this.getState(),
           status: 'auth',
-          user: json.result.user,
-          token: json.result.token,
+          user: json.result,
           error: null
         }, 'Авторизация прошла успешно');
       } else {
@@ -96,7 +93,6 @@ class LoginState extends StoreModule {
           ...this.getState(),
           status: 'noAuth',
           user: null,
-          token: null,
         }, 'Авторизация не удалась, ошибка запроса');
       }
     }
@@ -110,7 +106,6 @@ class LoginState extends StoreModule {
       ...this.getState(),
       status: 'no_auth',
       user: null,
-      token: null,
       error: null
     }, 'Авторизация сброшена');
 
