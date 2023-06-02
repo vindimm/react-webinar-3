@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function ProfileCard({user}) {
+function ProfileCard({user, t}) {
   const cn = bem('ProfileCard');
  
   return (
     <div className={cn()}>
-      <h1 className={cn('title')}>Профиль</h1>
+      <h1 className={cn('title')}>{t('profile.title')}</h1>
       <div className={cn('line')}>
-        <span className={cn('label')}>Имя: </span>
+        <span className={cn('label')}>{t('profile.name')}: </span>
         <b className={cn('value')}>{user?.profile.name}</b>
       </div>
       <div className={cn('line')}>
-        <span className={cn('label')}>Телефон: </span>
+        <span className={cn('label')}>{t('profile.phone')}: </span>
         <b className={cn('value')}>{user?.profile.phone}</b>
       </div>
       <div className={cn('line')}>
-        <span className={cn('label')}>email: </span>
+        <span className={cn('label')}>{t('profile.email')}: </span>
         <b className={cn('value')}>{user?.email}</b>
       </div>
     </div>
@@ -26,7 +26,8 @@ function ProfileCard({user}) {
 }
 
 ProfileCard.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  t: PropTypes.func,
 };
 
 export default memo(ProfileCard);

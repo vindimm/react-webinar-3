@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function LoginForm({onLogin, error}) {
+function LoginForm({onLogin, error, t}) {
   const cn = bem('LoginForm');
   const loginRef = useRef(null);
   const passwordRef = useRef(null);
@@ -17,18 +17,18 @@ function LoginForm({onLogin, error}) {
 
   return (
     <div className={cn()}>
-      <h2 className={cn('title')}>Вход</h2>
+      <h2 className={cn('title')}>{t('login.login')}</h2>
       <form className={cn('form')} onSubmit={callbacks.onSubmit}>
         <label className={cn('label')}>
-          Логин
+          {t('login.username')}
           <input className={cn('input')} type="text" ref={loginRef} id="login"/>
         </label>
         <label className={cn('label')}>
-          Пароль
+        {t('login.password')}
           <input className={cn('input')} type="password" ref={passwordRef} id="password"/>
         </label>
         {Boolean(error) && <p className={cn('error')}>{error}</p>}
-        <button type="submit">Войти</button>
+        <button type="submit">{t('login.input')}</button>
       </form>
     </div>
   );
@@ -36,12 +36,14 @@ function LoginForm({onLogin, error}) {
 
 LoginForm.propTypes = {
   onLogin: PropTypes.func,
-  error: PropTypes.string
+  error: PropTypes.string,
+  t: PropTypes.func
 };
 
 LoginForm.defaultProps = {
   onLogin: () => {},
-  error: ''
+  error: '',
+  t: (text) => text
 }
 
 export default memo(LoginForm);

@@ -35,11 +35,11 @@ function Login() {
   return (
     <PageLayout>
       <LoginMenu/>
-      <Head title={'Магазин'}>
+      <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <LoginForm error={select.error} onLogin={callbacks.login}/>
+      <LoginForm error={select.error} onLogin={callbacks.login} t={t}/>
     </PageLayout>
   );
 }

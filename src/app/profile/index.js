@@ -9,6 +9,7 @@ import Head from "../../components/head";
 import ProfileCard from "../../components/profile-card";
 
 function Profile() {
+  const {t} = useTranslate();
 
   const select = useSelector(state => ({
     user: state.login.user,
@@ -17,11 +18,11 @@ function Profile() {
   return (
     <PageLayout>
       <LoginMenu/>
-      <Head title={'Магазин'}>
+      <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <ProfileCard user={select.user}/>
+      <ProfileCard user={select.user} t={t}/>
     </PageLayout>
   );
 }
