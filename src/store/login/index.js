@@ -2,15 +2,15 @@ import StoreModule from "../module";
 import {saveToken, getToken, dropToken} from "../token";
 
 /**
- * Детальная ифнормация о товаре для страницы товара
+ * Информация об авторизации.
  */
 class LoginState extends StoreModule {
 
   initState() {
     return {
       status: 'unknown',
-      user: null,
-      error: null,
+      user: {},
+      error: '',
       waiting: false
     }
   }
@@ -41,7 +41,7 @@ class LoginState extends StoreModule {
           ...this.getState(),
           status: 'auth',
           user: json.result.user,
-          error: null,
+          error: '',
           waiting: false
         }, 'Авторизация прошла успешно');
 
@@ -55,7 +55,7 @@ class LoginState extends StoreModule {
       // Сохраняем данные об ошибке в стейт
       this.setState({
         status: 'noAuth',
-        user: null,
+        user: {},
         error: err.message,
         waiting: false
       }, 'Авторизация не удалась');
@@ -73,7 +73,7 @@ class LoginState extends StoreModule {
       this.setState({
         ...this.getState(),
         status: 'noAuth',
-        user: null,
+        user: {},
         waiting: false
       }, 'Проверка авторизации... status noAuth. нет токена');
 
@@ -102,14 +102,14 @@ class LoginState extends StoreModule {
           status: 'auth',
           user: json.result,
           waiting: false,
-          error: null
+          error: ''
         }, 'Авторизация прошла успешно');
       } else {
         // Не получилось авторизоваться
         this.setState({
           ...this.getState(),
           status: 'noAuth',
-          user: null,
+          user: {},
           waiting: false
         }, 'Авторизация не удалась, ошибка запроса');
       }
@@ -123,8 +123,8 @@ class LoginState extends StoreModule {
     this.setState({
       ...this.getState(),
       status: 'noAuth',
-      user: null,
-      error: null
+      user: {},
+      error: ''
     }, 'Авторизация сброшена');
 
     const token = getToken();
@@ -138,6 +138,16 @@ class LoginState extends StoreModule {
     });
 
     dropToken();
+  }
+
+  /**
+   * Сброс состояния login (сброс ошибки)
+   */
+  reset() {
+    this.setState({
+      ...this.getState(),
+      error: '',
+    }, 'Состояние авторизации сброшено (сброс значения ошибки)');
   }
 }
 

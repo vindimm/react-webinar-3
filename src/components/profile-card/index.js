@@ -3,25 +3,27 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function ProfileCard({user, t}) {
+function ProfileCard({user, isExist, t}) {
   const cn = bem('ProfileCard');
  
   return (
-    <div className={cn()}>
-      <h1 className={cn('title')}>{t('profile.title')}</h1>
-      <div className={cn('line')}>
-        <span className={cn('label')}>{t('profile.name')}: </span>
-        <b className={cn('value')}>{user?.profile.name}</b>
+    isExist && (
+      <div className={cn()}>
+        <h1 className={cn('title')}>{t('profile.title')}</h1>
+        <div className={cn('line')}>
+          <span className={cn('label')}>{t('profile.name')}: </span>
+          <b className={cn('value')}>{user?.profile.name}</b>
+        </div>
+        <div className={cn('line')}>
+          <span className={cn('label')}>{t('profile.phone')}: </span>
+          <b className={cn('value')}>{user?.profile.phone}</b>
+        </div>
+        <div className={cn('line')}>
+          <span className={cn('label')}>{t('profile.email')}: </span>
+          <b className={cn('value')}>{user?.email}</b>
+        </div>
       </div>
-      <div className={cn('line')}>
-        <span className={cn('label')}>{t('profile.phone')}: </span>
-        <b className={cn('value')}>{user?.profile.phone}</b>
-      </div>
-      <div className={cn('line')}>
-        <span className={cn('label')}>{t('profile.email')}: </span>
-        <b className={cn('value')}>{user?.email}</b>
-      </div>
-    </div>
+    )
   );
 }
 

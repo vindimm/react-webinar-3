@@ -7,7 +7,8 @@ class ArticleState extends StoreModule {
 
   initState() {
     return {
-      data: null,
+      data: {},
+      isExist: false,
       waiting: false // признак ожидания загрузки
     }
   }
@@ -20,7 +21,8 @@ class ArticleState extends StoreModule {
   async load(id) {
     // Сброс текущего товара и установка признака ожидания загрузки
     this.setState({
-      data: null,
+      data: {},
+      isExist: false,
       waiting: true
     });
 
@@ -31,6 +33,7 @@ class ArticleState extends StoreModule {
       // Товар загружен успешно
       this.setState({
         data: json.result,
+        isExist: true,
         waiting: false
       }, 'Загружен товар из АПИ');
 
@@ -38,7 +41,8 @@ class ArticleState extends StoreModule {
       // Ошибка при загрузке
       // @todo В стейт можно положить информацию об ошибке
       this.setState({
-        data: null,
+        data: {},
+        isExist: false,
         waiting: false
       });
     }
@@ -50,7 +54,8 @@ class ArticleState extends StoreModule {
   reset() {
     // Сброс текущего товара
     this.setState({
-      data: null,
+      data: {},
+      isExist: false,
       waiting: false
     }, 'Сброшены данные о товаре');
   }

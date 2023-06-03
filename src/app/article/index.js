@@ -4,6 +4,7 @@ import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
+
 import Navigation from "../../containers/navigation";
 import LoginMenu from "../../containers/login-menu";
 import LocaleSelect from "../../containers/locale-select";
@@ -32,6 +33,7 @@ function Article() {
 
   const select = useSelector(state => ({
     article: state.article.data,
+    isExist: state.article.isExist,
     waiting: state.article.waiting,
   }));
 
@@ -50,7 +52,7 @@ function Article() {
       </Head>
       <Navigation/>
       <Spinner active={select.waiting}>
-        <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t}/>
+        <ArticleCard article={select.article} isExist={select.isExist} onAdd={callbacks.addToBasket} t={t}/>
       </Spinner>
     </PageLayout>
   );

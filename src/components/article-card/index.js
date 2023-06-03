@@ -4,11 +4,11 @@ import {cn as bem} from '@bem-react/classname';
 import {numberFormat} from "../../utils/utils.js";
 import './style.css';
 
-function ArticleCard({article, onAdd, t}) {
+function ArticleCard({article, isExist, onAdd, t}) {
   const cn = bem('ArticleCard');
-  
+
   return (
-    article && (
+    isExist && (
       <div className={cn()}>
         <div className={cn('description')}>{article.description}</div>
         <div className={cn('prop')}>

@@ -1,6 +1,9 @@
 import {memo} from 'react';
+import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
+import useInit from '../../hooks/use-init';
+
 import Navigation from "../../containers/navigation";
 import LocaleSelect from "../../containers/locale-select";
 import LoginMenu from "../../containers/login-menu";
@@ -10,9 +13,15 @@ import ProfileCard from "../../components/profile-card";
 
 function Profile() {
   const {t} = useTranslate();
+  const store = useStore();
+
+  useInit(() => {
+    store.actions.profile.load();
+  }, []);
 
   const select = useSelector(state => ({
-    user: state.login.user,
+    user: state.profile.user,
+    isExist: state.profile.isExist,
   }));
 
   return (
@@ -22,7 +31,7 @@ function Profile() {
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <ProfileCard user={select.user} t={t}/>
+      <ProfileCard user={select.user} isExist={select.isExist} t={t}/>
     </PageLayout>
   );
 }

@@ -27,6 +27,12 @@ function Login() {
     }
   }, [select.status]);
 
+  useEffect(() => {
+    return () => {
+      store.actions.login.reset();
+    };
+  }, []);
+
   const callbacks = {
     // Авторизация
     login: useCallback((data) => store.actions.login.login(data), [store]),
