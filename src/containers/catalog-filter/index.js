@@ -13,6 +13,7 @@ function CatalogFilter() {
 
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
+    page: state.catalog.params.page,
     category: state.catalog.params.category,
     query: state.catalog.params.query,
     categories: state.categories.items,
@@ -20,13 +21,29 @@ function CatalogFilter() {
 
   const callbacks = {
     // Сортировка
-    onSort: useCallback(sort => store.actions.catalog.setParams({sort}), [store]),
+    onSort: useCallback(sort => {
+      store.actions.catalog.setParams({sort});
+      store.actions.catalog.setPageNumber(1);
+      store.actions.catalog.load(select.page);
+    }, [store]),
     // Поиск
-    onSearch: useCallback(query => store.actions.catalog.setParams({query, page: 1}), [store]),
+    onSearch: useCallback(query => {
+      store.actions.catalog.setParams({query});
+      store.actions.catalog.setPageNumber(1);
+      store.actions.catalog.load(select.page);
+    }, [store]),
     // Категории
-    onCategoryChange: useCallback(category => store.actions.catalog.setParams({category, page: 1}), [store]),
+    onCategoryChange: useCallback(category => {
+      store.actions.catalog.setParams({category});
+      store.actions.catalog.setPageNumber(1);
+      store.actions.catalog.load(select.page)
+    }, [store]),
     // Сброс
-    onReset: useCallback(() => store.actions.catalog.resetParams(), [store]),
+    onReset: useCallback(() => {
+      store.actions.catalog.resetParams();
+      store.actions.catalog.setPageNumber(1);
+      store.actions.catalog.load(select.page);
+    }, [store]),
   };
 
   const categoriesOptions = getCategories(select.categories);

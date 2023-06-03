@@ -1,7 +1,10 @@
 import {memo} from 'react';
+import {useParams} from 'react-router-dom';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
+import useSelector from "../../hooks/use-selector";
+
 import Navigation from "../../containers/navigation";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
@@ -13,11 +16,16 @@ import Head from "../../components/head";
 function Main() {
 
   const store = useStore();
+  const {id} = useParams();
+  const pageNumber = Number(id);
 
   useInit(() => {
-    store.actions.categories.load();
+    // Берем данные из адресной строки и записываем их в store
     store.actions.catalog.initParams();
-  }, [], true);
+    store.actions.catalog.setPageNumber(pageNumber);
+    store.actions.catalog.load(pageNumber);
+    store.actions.categories.load();
+  }, [pageNumber], true);
 
   const {t} = useTranslate();
 

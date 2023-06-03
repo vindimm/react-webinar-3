@@ -18,10 +18,6 @@ function Navigation() {
   const callbacks = {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
-    // Обработка перехода на главную
-    onNavigate: useCallback((item) => {
-      if (item.key === 1) store.actions.catalog.resetParams();
-    }, [store])
   }
 
   // Функция для локализации текстов
@@ -29,13 +25,13 @@ function Navigation() {
 
   const options = {
     menu: useMemo(() => ([
-      {key: 1, title: t('menu.main'), link: '/'},
+      {key: 1, title: t('menu.main'), link: '/page/1?limit=10&sort=order&category=&query='},
     ]), [t])
   };
 
   return (
     <SideLayout side='between'>
-      <Menu items={options.menu} onNavigate={callbacks.onNavigate}/>
+      <Menu items={options.menu}/>
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} t={t}/>
     </SideLayout>
   );
