@@ -13,12 +13,12 @@ class CatalogState extends StoreModule {
     return {
       list: [],
       params: {
+        page: 1,
         limit: 10,
         sort: 'order',
         category: '',
         query: ''
       },
-      page: 1,
       count: 0,
       waiting: false
     }
@@ -77,18 +77,10 @@ class CatalogState extends StoreModule {
     } else {
       window.history.pushState({}, '', url);
     }
-  }
-    
-  /**
-   * @param {Number} page номер страницы
-   * Загрузка товаров
-   */
-  async load(page) {
-    const params = this.getState().params;
-  
+
     const apiParams = {
       limit: params.limit,
-      skip: (page - 1) * params.limit,
+      skip: (params.page - 1) * params.limit,
       fields: 'items(*),count',
       sort: params.sort,
       'search[query]': params.query,
@@ -108,14 +100,6 @@ class CatalogState extends StoreModule {
       count: json.result.count,
       waiting: false
     }, 'Загружен список товаров из АПИ');
-  }
-
-  /**
-   * @param {Number} page номер страницы
-   * Установка номера страницы
-   */
-  setPageNumber(page) {
-    this.setState({...this.getState(), page}, 'Установлена новая страница в Store');
   }
 }
 

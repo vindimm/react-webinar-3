@@ -1,5 +1,4 @@
 import {memo} from 'react';
-import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname'
 import './style.css';
@@ -28,14 +27,23 @@ function Pagination(props) {
   // Последняя страница
   if (right < length) items.push(length);
 
+  const onClickHandler = (number) => (e) => {
+    if (props.onChange) {
+      e.preventDefault();
+      props.onChange(number);
+    }
+  }
+
   const cn = bem('Pagination');
   return (
     <ul className={cn()}>
       {items.map((number, index) => (
-        <li key={index} className={cn('item', {active: number === props.page, split: !number})}>
+        <li key={index}
+            className={cn('item', {active: number === props.page, split: !number})}
+            onClick={onClickHandler(number)}>
           {number
             ? (props.makeLink
-                ? <Link className={cn('link')} to={props.makeLink(number)}>{number}</Link>
+                ? <a href={props.makeLink(number)}>{number}</a>
                 : number
             )
             : '...'
