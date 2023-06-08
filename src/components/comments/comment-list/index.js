@@ -1,17 +1,26 @@
-import {memo} from 'react';
+import {React, Fragment, memo} from 'react';
 import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
 import CommentItem from '../comment-item';
 
-function CommentList({ comments }) {
+function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCancelClick }) {
   const cn = bem('CommentList');
   
   return (
     <ul className={cn()}>
       {comments.map((item) => {
-        return <CommentItem userName={item.author.profile.name} created={item.dateCreate} text={item.text} key={item._id} />
+        return (
+          <CommentItem
+            comment={item}
+            activeCommentId={activeCommentId}
+            key={item._id}
+            isAuth={isAuth}
+            onAnswerClick={onAnswerClick}
+            onCancelClick={onCancelClick}
+          />
+        )
       })}
     </ul>
   );
@@ -19,10 +28,17 @@ function CommentList({ comments }) {
 
 CommentList.propTypes = {
   comments: PropTypes.array,
+  activeCommentId: PropTypes.string,
+  isAuth: PropTypes.bool.isRequired,
+  onHandleAnswer: PropTypes.func,
+  onCancelClick: PropTypes.func,
 }
 
 CommentList.defaultProps = {
   comments: [],
+  activeCommentId: '',
+  onHandleAnswer: () => {},
+  onCancelClick: () => {},
 }
 
 export default memo(CommentList);

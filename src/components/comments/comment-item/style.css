@@ -2,13 +2,16 @@
   margin-bottom: 30px;
 }
 
-.CommentItem-user {
-  margin-right: 10px;
-  font-size: 12px;
-}
-
 .CommentItem-info {
   margin-bottom: 10px;
+
+  font-size: 12px;
+  font-size:  16px  /* Сделал шрифт крупнее на время разработки */
+}
+
+.CommentItem-user {
+  margin-right: 10px;
+  font-weight: 700;
 }
 
 .CommentItem-created {
@@ -18,6 +21,8 @@
 .CommentItem-text {
   margin-top: 0;
   margin-bottom: 10px;
+  font-size: 14px;
+  font-size:  18px;  /* Сделал шрифт крупнее на время разработки */
 }
 
 .CommentItem-answer {
@@ -27,6 +32,8 @@
   display: inline-block;
 
   font-size: 12px;
+  font-size:  16px;  /* Сделал шрифт крупнее на время разработки */
   background-color: transparent;
   color: #0087E9;
+  cursor: pointer;
 }
