@@ -6,7 +6,7 @@ import './style.css';
 
 import CommentForm from '../comment-form';
 
-function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancelClick }) {
+function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
   const cn = bem('CommentItem');
   
   return (
@@ -19,7 +19,13 @@ function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancel
       <button className={cn('answer')} onClick={() => onAnswerClick(comment._id)}>Ответить</button>
       {
         activeCommentId === comment._id &&
-        <CommentForm isAuth={isAuth} activeCommentId={activeCommentId} onCancelClick={onCancelClick} />
+        <CommentForm
+          isAuth={isAuth}
+          activeCommentId={activeCommentId}
+          onCancelClick={onCancelClick}
+          onMessageChange={onMessageChange}
+          onSendComment={onSendComment}
+        />
       }
     </li>
   );
@@ -31,6 +37,8 @@ CommentItem.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,
+  onMessageChange: PropTypes.func,
+  onSendComment: PropTypes.func,
 }
 
 CommentItem.defaultProps = {
@@ -38,6 +46,8 @@ CommentItem.defaultProps = {
   activeCommentId: '',
   onHandleAnswer: () => {},
   onCancelClick: () => {},
+  onMessageChange: () => {},
+  onSendComment: () => {},
 }
 
 export default memo(CommentItem);

@@ -5,7 +5,7 @@ import './style.css';
 
 import CommentItem from '../comment-item';
 
-function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCancelClick }) {
+function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
   const cn = bem('CommentList');
   
   return (
@@ -19,6 +19,8 @@ function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCance
             isAuth={isAuth}
             onAnswerClick={onAnswerClick}
             onCancelClick={onCancelClick}
+            onMessageChange={onMessageChange}
+            onSendComment={onSendComment}
           />
         )
       })}
@@ -32,6 +34,8 @@ CommentList.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,
+  onMessageChange: PropTypes.func,
+  onSendComment: PropTypes.func,
 }
 
 CommentList.defaultProps = {
@@ -39,6 +43,8 @@ CommentList.defaultProps = {
   activeCommentId: '',
   onHandleAnswer: () => {},
   onCancelClick: () => {},
+  onMessageChange: () => {},
+  onSendComment: () => {},
 }
 
 export default memo(CommentList);

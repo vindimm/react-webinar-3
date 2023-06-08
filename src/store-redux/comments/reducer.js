@@ -16,6 +16,19 @@ function reducer(state = initialState, action) {
     case "comments/load-error":
       return { ...state, comments: [], waiting: false}; //@todo текст ошибки сохранить?
 
+    case "comments/send-start":
+      return { ...state, waiting: true};
+
+    case "comments/send-success":
+      return { 
+        ...state,
+        comments: [...state.comments, action.payload],
+        waiting: false
+      };
+
+    case "comments/send-error":
+      return { ...state, waiting: false};
+
     default:
       // Нет изменений
       return state;
