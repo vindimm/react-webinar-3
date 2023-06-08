@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
-import useSelector from '../../hooks/use-selector';
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import shallowequal from "shallowequal";
 import articleActions from '../../store-redux/article/actions';
@@ -16,8 +15,7 @@ import Spinner from "../../components/spinner";
 import ArticleCard from "../../components/article-card";
 import LocaleSelect from "../../containers/locale-select";
 import TopHead from "../../containers/top-head";
-import CommentLayout from "../../components/comments/comment-layout";
-import CommentList from "../../components/comments/comment-list";
+import CommentsBlock from '../../containers/comments-block';
 
 
 function Article() {
@@ -31,14 +29,9 @@ function Article() {
     dispatch(commentsActions.load(params.id));
   }, [params.id]);
 
-  const selectStore = useSelector(state => ({
-    isAuth: state.session.exists,
-  }));
-
-  const selectRedux = useSelectorRedux(state => ({
+  const select = useSelectorRedux(state => ({
     article: state.article.data,
     articleWaiting: state.article.waiting,
-    comments: state.comments.comments,
     commentsWaiting: state.comments.waiting,
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
 
@@ -52,17 +45,15 @@ function Article() {
   return (
     <PageLayout>
       <TopHead/>
-      <Head title={selectRedux.article.title}>
+      <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <Spinner active={selectRedux.articleWaiting}>
-        <ArticleCard article={selectRedux.article} onAdd={callbacks.addToBasket} t={t}/>
+      <Spinner active={select.articleWaiting}>
+        <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t}/>
       </Spinner>
-      <Spinner active={selectRedux.commentsWaiting}>
-        <CommentLayout count={selectRedux.comments.length} isAuth={selectStore.isAuth} >
-          <CommentList comments={selectRedux.comments}/>
-        </CommentLayout>
+      <Spinner active={select.commentsWaiting}>
+        <CommentsBlock/>
       </Spinner>
     </PageLayout>
   );

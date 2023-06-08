@@ -1,0 +1,32 @@
+.CommentItem {
+  margin-bottom: 30px;
+}
+
+.CommentItem-user {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.CommentItem-info {
+  margin-bottom: 10px;
+}
+
+.CommentItem-created {
+  color: #666666;
+}
+
+.CommentItem-text {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.CommentItem-answer {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: inline-block;
+
+  font-size: 12px;
+  background-color: transparent;
+  color: #0087E9;
+}

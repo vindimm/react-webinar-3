@@ -7,11 +7,11 @@ import CommentItem from '../comment-item';
 
 function CommentList({ comments }) {
   const cn = bem('CommentList');
-
+  
   return (
     <ul className={cn()}>
       {comments.map((item) => {
-        return <CommentItem userName={item.author._id} created={item.dateCreate} text={item.text} key={item._id} />
+        return <CommentItem userName={item.author.profile.name} created={item.dateCreate} text={item.text} key={item._id} />
       })}
     </ul>
   );
