@@ -37,7 +37,7 @@ function CommentForm({ activeCommentId, isAuth, message, onCancelClick, onMessag
         <legend className={cn('legend')}>Новый {titleText}</legend>
         <textarea
           className={cn('textarea')}
-          rows="4"
+          rows="5"
           placeholder="Текст"
           value={message}
           onChange={(evt) => onMessageChange(evt.target.value)}

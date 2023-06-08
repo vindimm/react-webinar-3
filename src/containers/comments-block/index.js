@@ -5,6 +5,8 @@ import useSelector from "../../hooks/use-selector";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import shallowequal from "shallowequal";
 import commentsActions from '../../store-redux/comments/actions';
+import listToTree from "../../utils/list-to-tree";
+import treeToList from "../../utils/tree-to-list";
 
 import CommentLayout from "../../components/comments/comment-layout";
 import CommentList from "../../components/comments/comment-list";
@@ -50,10 +52,17 @@ function CommentsBlock() {
     }, [message, selectRedux.articleId]),
   }
 
+  let tree = [];
+  let newComments = [];
+  if (selectRedux.comments && selectRedux.articleId) {
+    tree = listToTree(selectRedux.comments, selectRedux.articleId);
+    newComments = treeToList(tree, (item, level) => ({...item, level}));
+  }
+
   return (
     <CommentLayout count={selectRedux.comments.length}>
       <CommentList
-        comments={selectRedux.comments}
+        comments={newComments}
         activeCommentId={activeCommentId}
         isAuth={selectStore.isAuth}
         message={message}

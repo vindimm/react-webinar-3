@@ -8,9 +8,10 @@ import CommentForm from '../comment-form';
 
 function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
   const cn = bem('CommentItem');
-  
+  const MAX_LEVEL = 6;
+
   return (
-    <li className={cn()}>
+    <li className={cn()} style={{marginLeft: `${(comment.level <= MAX_LEVEL ? comment.level : MAX_LEVEL) * 30}px`}}>
       <div className={cn('info')}>
         <span className={cn('user')}>{comment.author.profile.name}</span>
         <span className={cn('created')}>{formatDate(comment.dateCreate)}</span>
