@@ -6,12 +6,15 @@ import './style.css';
 
 import CommentForm from '../comment-form';
 
-function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
+function CommentItem({ comment, activeCommentId, newCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentItem');
   const MAX_LEVEL = 6;
 
   return (
-    <li className={cn()} style={{marginLeft: `${(comment.level <= MAX_LEVEL ? comment.level : MAX_LEVEL) * 30}px`}}>
+    <li
+      className={cn('',{'new': newCommentId === comment._id})}
+      style={{marginLeft: `${(comment.level <= MAX_LEVEL ? comment.level : MAX_LEVEL) * 30}px`}}
+    >
       <div className={cn('info')}>
         <span className={cn('user')}>{comment.author.profile.name}</span>
         <span className={cn('created')}>{formatDate(comment.dateCreate)}</span>
@@ -36,6 +39,7 @@ function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancel
 CommentItem.propTypes = {
   comment: PropTypes.object,
   activeCommentId: PropTypes.string,
+  newCommentId: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,

@@ -1,4 +1,4 @@
-import {memo, useState, useCallback, useMemo} from "react";
+import {memo, useState, useCallback, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
@@ -29,6 +29,7 @@ function CommentsBlock() {
     comments: state.comments.comments,
     commentsCount: state.comments.count,
     commentsWaiting: state.comments.waiting,
+    newCommentId: state.comments.newCommentId,
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
 
   const callbacks = {
@@ -52,6 +53,7 @@ function CommentsBlock() {
     }, [location.pathname]),
   }
 
+  // Создание структуры для вложенности комментариев
   let tree = [];
   let newComments = [];
   if (selectRedux.comments && selectRedux.articleId) {
@@ -59,12 +61,22 @@ function CommentsBlock() {
     newComments = treeToList(tree, (item, level) => ({...item, level}));
   }
 
+  // Скролл к новому комментарию
+  useEffect(() => {
+    const newComment = document.querySelector('.CommentItem_new');
+    const offsetY = newComment?.getBoundingClientRect().y + window.scrollY;
+    if (offsetY) {
+      window.scrollTo({top: offsetY - window.innerHeight / 2, behavior: 'instant'});
+    }
+  }, []);
+
   return (
     !selectRedux.commentsWaiting &&
     <CommentLayout count={selectRedux.commentsCount}>
       <CommentList
         comments={newComments}
-        activeCommentId={activeCommentId}
+        activeCommentId={activeCommentId} // комментарий, на который собираемся ответить (под ним открыта форма ответа)
+        newCommentId={selectRedux.newCommentId} // комментарий, который был добавлен нами, делаем скролл к нему
         isAuth={selectStore.isAuth}
         onAnswerClick={callbacks.onAnswerClick}
         onCancelClick={callbacks.onCancelClick}

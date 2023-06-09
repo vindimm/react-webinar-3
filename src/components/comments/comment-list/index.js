@@ -5,7 +5,7 @@ import './style.css';
 
 import CommentItem from '../comment-item';
 
-function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
+function CommentList({ comments, activeCommentId, newCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentList');
   
   return (
@@ -15,6 +15,7 @@ function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCance
           <CommentItem
             comment={item}
             activeCommentId={activeCommentId}
+            newCommentId={newCommentId}
             key={item._id}
             isAuth={isAuth}
             onAnswerClick={onAnswerClick}
@@ -31,6 +32,7 @@ function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCance
 CommentList.propTypes = {
   comments: PropTypes.array,
   activeCommentId: PropTypes.string,
+  newCommentId: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,
