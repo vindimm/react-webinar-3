@@ -5,7 +5,7 @@ import './style.css';
 
 import CommentItem from '../comment-item';
 
-function CommentList({ comments, activeCommentId, newCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
+function CommentList({ comments, activeCommentId, newCommentId, userId, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentList');
   // Находим индекс последнего прямого потомка для комментария, на который отвечаем.
   const lastChildCommentIndex = comments.findLastIndex((comment) => comment.parent._id === activeCommentId);
@@ -22,7 +22,7 @@ function CommentList({ comments, activeCommentId, newCommentId, isAuth, onAnswer
             lastChildCommentId={lastChildCommentId}
             newCommentId={newCommentId}
             key={item._id}
-            isAuth={isAuth}
+            userId={userId}
             onAnswerClick={onAnswerClick}
             onCancelClick={onCancelClick}
             onSendComment={onSendComment}
@@ -38,7 +38,7 @@ CommentList.propTypes = {
   comments: PropTypes.array,
   activeCommentId: PropTypes.string,
   newCommentId: PropTypes.string,
-  isAuth: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,
   onSendComment: PropTypes.func,

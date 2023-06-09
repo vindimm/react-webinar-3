@@ -19,7 +19,7 @@ function CommentsBlock() {
   const navigate = useNavigate();
 
   const selectStore = useSelector(state => ({
-    isAuth: state.session.exists,
+    userId: state.session.user._id,
   }));
 
   const selectRedux = useSelectorRedux(state => ({
@@ -54,12 +54,8 @@ function CommentsBlock() {
   }
 
   // Создание структуры для вложенности комментариев
-  let tree = [];
-  let newComments = [];
-  if (selectRedux.comments && selectRedux.articleId) {
-    tree = listToTree(selectRedux.comments, selectRedux.articleId);
-    newComments = treeToList(tree, (item, level) => ({...item, level}));
-  }
+  const tree = listToTree(selectRedux.comments, selectRedux.articleId);
+  const newComments = treeToList(tree, (item, level) => ({...item, level}));
 
   // Скролл к новому комментарию
   useEffect(() => {
@@ -81,13 +77,12 @@ function CommentsBlock() {
 
 
   return (
-    !selectRedux.commentsWaiting &&
     <CommentLayout count={selectRedux.commentsCount}>
       <CommentList
         comments={newComments}
         activeCommentId={activeCommentId} // комментарий, на который собираемся ответить
         newCommentId={selectRedux.newCommentId} // комментарий, который был добавлен нами, делаем скролл к нему
-        isAuth={selectStore.isAuth}
+        userId={selectStore.userId}
         onAnswerClick={callbacks.onAnswerClick}
         onCancelClick={callbacks.onCancelClick}
         onSendComment={callbacks.onSendComment}
@@ -96,7 +91,7 @@ function CommentsBlock() {
       {
         !activeCommentId &&
         <CommentForm
-          isAuth={selectStore.isAuth}
+          userId={selectStore.userId}
           onSignIn={callbacks.onSignIn}
           onSendComment={callbacks.onSendComment}
         />

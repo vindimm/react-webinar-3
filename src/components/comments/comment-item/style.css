@@ -15,6 +15,10 @@
   font-weight: 700;
 }
 
+.CommentItem-user_self {
+  color: #666666;
+}
+
 .CommentItem-created {
   color: #666666;
 }

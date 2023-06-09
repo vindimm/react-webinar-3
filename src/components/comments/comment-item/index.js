@@ -6,7 +6,7 @@ import './style.css';
 
 import CommentForm from '../comment-form';
 
-function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
+function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentId, userId, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentItem');
   const MAX_LEVEL = 6;
   const PAD_SIZE = 30;
@@ -17,7 +17,7 @@ function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentI
       style={{marginLeft: `${(comment.level <= MAX_LEVEL ? comment.level : MAX_LEVEL) * PAD_SIZE}px`}}
     >
       <div className={cn('info')}>
-        <span className={cn('user')}>{comment.author.profile.name}</span>
+        <span className={cn('user', {'self': userId === comment.author._id})}>{comment.author.profile.name}</span>
         <span className={cn('created')}>{formatDate(comment.dateCreate)}</span>
       </div>
       <p className={cn('text')}>{comment.text}</p>
@@ -25,7 +25,7 @@ function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentI
       {
         lastChildCommentId === comment._id &&
         <CommentForm
-          isAuth={isAuth}
+          userId={userId}
           activeCommentId={activeCommentId}
           lastChildCommentId={lastChildCommentId}
           activeCommentAuthor={comment.author.profile.name}
@@ -42,7 +42,7 @@ CommentItem.propTypes = {
   comment: PropTypes.object,
   activeCommentId: PropTypes.string,
   newCommentId: PropTypes.string,
-  isAuth: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,
   onSendComment: PropTypes.func,
