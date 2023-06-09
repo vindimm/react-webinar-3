@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function CommentForm({ activeCommentId, isAuth, message, onCancelClick, onMessageChange, onSendComment }) {
+function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, message, onCancelClick, onMessageChange, onSendComment }) {
   const cn = bem('CommentForm');
   
   if (!isAuth) {
@@ -22,6 +22,7 @@ function CommentForm({ activeCommentId, isAuth, message, onCancelClick, onMessag
   }
 
   const titleText = activeCommentId ? 'ответ' : 'комментарий';
+  const placeholderText = activeCommentId ? `Мой ответ для ${activeCommentAuthor}` : 'Текст';
 
   return (
     <form
@@ -38,13 +39,13 @@ function CommentForm({ activeCommentId, isAuth, message, onCancelClick, onMessag
         <textarea
           className={cn('textarea')}
           rows="5"
-          placeholder="Текст"
+          placeholder={placeholderText}
           value={message}
           onChange={(evt) => onMessageChange(evt.target.value)}
         >
         </textarea>
         <div className={cn('buttons')}>
-          <button className={cn('submit')} type="submit">Отправить</button>
+          <button className={cn('submit')} type="submit" disabled={!message?.trim()}>Отправить</button>
           {
             activeCommentId &&
             <button className={cn('cancelButton')} type="button" onClick={onCancelClick}>Отмена</button>
@@ -57,7 +58,9 @@ function CommentForm({ activeCommentId, isAuth, message, onCancelClick, onMessag
 
 CommentForm.propTypes = {
   isAuth: PropTypes.bool.isRequired,
+  message: PropTypes.string,
   activeCommentId: PropTypes.string,
+  activeCommentAuthor: PropTypes.string,
   onCancelClick: PropTypes.func,
   onMessageChange: PropTypes.func,
   onSendComment: PropTypes.func,
@@ -65,6 +68,7 @@ CommentForm.propTypes = {
 
 CommentForm.defaultProps = {
   activeCommentId: '',
+  activeCommentAuthor: '',
   onCancelClick: () => {},
   onMessageChange: () => {},
   onSendComment: () => {},

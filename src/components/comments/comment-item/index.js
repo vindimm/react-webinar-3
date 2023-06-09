@@ -6,7 +6,7 @@ import './style.css';
 
 import CommentForm from '../comment-form';
 
-function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
+function CommentItem({ comment, message, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
   const cn = bem('CommentItem');
   const MAX_LEVEL = 6;
 
@@ -22,7 +22,9 @@ function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancel
         activeCommentId === comment._id &&
         <CommentForm
           isAuth={isAuth}
+          message={message}
           activeCommentId={activeCommentId}
+          activeCommentAuthor={comment.author.profile.name}
           onCancelClick={onCancelClick}
           onMessageChange={onMessageChange}
           onSendComment={onSendComment}
@@ -34,6 +36,7 @@ function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancel
 
 CommentItem.propTypes = {
   comment: PropTypes.object,
+  message: PropTypes.string,
   activeCommentId: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,

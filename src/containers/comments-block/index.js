@@ -1,6 +1,4 @@
 import {memo, useState, useCallback, useMemo} from "react";
-import useTranslate from "../../hooks/use-translate";
-import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import shallowequal from "shallowequal";
@@ -28,6 +26,7 @@ function CommentsBlock() {
     articleWaiting: state.article.waiting,
     articleId: state.article.data._id,
     comments: state.comments.comments,
+    commentsCount: state.comments.count,
     commentsWaiting: state.comments.waiting,
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
 
@@ -35,10 +34,12 @@ function CommentsBlock() {
      // Клик по кнопке "Ответить"
     onAnswerClick: useCallback((id) => {
       setActiveCommentId(id);
+      setMessage('');
     }, []),
      // Клик по кнопке "Отмена"
     onCancelClick: useCallback(() => {
       setActiveCommentId('');
+      setMessage('');
     }, []),
     // Изменения текста комментария
     onMessageChange: useCallback((text) => {
@@ -60,7 +61,8 @@ function CommentsBlock() {
   }
 
   return (
-    <CommentLayout count={selectRedux.comments.length}>
+    !selectRedux.commentsWaiting &&
+    <CommentLayout count={selectRedux.commentsCount}>
       <CommentList
         comments={newComments}
         activeCommentId={activeCommentId}

@@ -1,4 +1,4 @@
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback} from 'react';
 import {useParams} from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
@@ -25,9 +25,19 @@ function Article() {
   const params = useParams();
 
   useInit(() => {
-    dispatch(articleActions.load(params.id));
     dispatch(commentsActions.load(params.id));
+    dispatch(articleActions.load(params.id));
   }, [params.id]);
+
+  // В лекции был показан вариант с использованием Promise.all для параллельного совершения запросов.
+  // Кажется что и без Promise.all запросы идут параллельно.
+
+  // useInit(async () => {
+  //   await Promise.all([
+  //     dispatch(commentsActions.load(params.id)),
+  //     dispatch(articleActions.load(params.id)),
+  //   ]);
+  // }, [params.id], true);
 
   const select = useSelectorRedux(state => ({
     article: state.article.data,

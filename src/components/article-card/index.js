@@ -7,6 +7,7 @@ import './style.css';
 function ArticleCard({article, onAdd, t}) {
   const cn = bem('ArticleCard');
   return (
+    article._id &&
     <div className={cn()}>
       <div className={cn('description')}>{article.description}</div>
       <div className={cn('prop')}>

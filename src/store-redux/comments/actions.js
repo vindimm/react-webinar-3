@@ -10,10 +10,10 @@ export default {
       dispatch({type: 'comments/load-start'});
 
       try {
-        const res = await services.api.request({
+        const response = await services.api.request({
           url: `/api/v1/comments?search[parent]=${id}&limit=*&fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type)),count`
         });
-        dispatch({type: 'comments/load-success', payload: {data: res.data.result.items}});
+        dispatch({type: 'comments/load-success', payload: {data: response.data.result}});
 
       } catch (e) {
         //Ошибка загрузки
@@ -37,7 +37,7 @@ export default {
           url: `/api/v1/comments?fields=_id,text,dateCreate,author(profile(name)),parent(_id,_type)`,
           method: 'POST',
           accept: 'application/json',
-          ContentType: 'applicatin/json',
+          ContentType: 'application/json',
           body: JSON.stringify(data),
         });
         dispatch({type: 'comments/send-success', payload: response.data.result});

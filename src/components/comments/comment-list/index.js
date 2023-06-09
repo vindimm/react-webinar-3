@@ -1,11 +1,11 @@
-import {React, Fragment, memo} from 'react';
+import {React, memo} from 'react';
 import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
 import CommentItem from '../comment-item';
 
-function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
+function CommentList({ comments, message, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
   const cn = bem('CommentList');
   
   return (
@@ -14,6 +14,7 @@ function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCance
         return (
           <CommentItem
             comment={item}
+            message={message}
             activeCommentId={activeCommentId}
             key={item._id}
             isAuth={isAuth}
@@ -30,6 +31,7 @@ function CommentList({ comments, activeCommentId, isAuth, onAnswerClick, onCance
 
 CommentList.propTypes = {
   comments: PropTypes.array,
+  message: PropTypes.string,
   activeCommentId: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,

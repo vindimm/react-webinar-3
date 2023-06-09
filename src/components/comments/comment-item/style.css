@@ -23,6 +23,7 @@
   margin-bottom: 10px;
   font-size: 14px;
   font-size:  18px;  /* Сделал шрифт крупнее на время разработки */
+  word-wrap: break-word;
 }
 
 .CommentItem-answer {
