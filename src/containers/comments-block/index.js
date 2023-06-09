@@ -70,12 +70,22 @@ function CommentsBlock() {
     }
   }, []);
 
+  // Скролл к форме добавления комментария
+  useEffect(() => {
+    const formElement = document.querySelector('.CommentForm_active');
+    const offsetY = formElement?.getBoundingClientRect().y + window.scrollY;
+    if (offsetY) {
+      window.scrollTo({top: offsetY - window.innerHeight / 2, behavior: 'instant'});
+    }
+  }, [activeCommentId]);
+
+
   return (
     !selectRedux.commentsWaiting &&
     <CommentLayout count={selectRedux.commentsCount}>
       <CommentList
         comments={newComments}
-        activeCommentId={activeCommentId} // комментарий, на который собираемся ответить (под ним открыта форма ответа)
+        activeCommentId={activeCommentId} // комментарий, на который собираемся ответить
         newCommentId={selectRedux.newCommentId} // комментарий, который был добавлен нами, делаем скролл к нему
         isAuth={selectStore.isAuth}
         onAnswerClick={callbacks.onAnswerClick}

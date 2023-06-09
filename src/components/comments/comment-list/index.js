@@ -7,7 +7,11 @@ import CommentItem from '../comment-item';
 
 function CommentList({ comments, activeCommentId, newCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentList');
-  
+  // Находим индекс последнего прямого потомка для комментария, на который отвечаем.
+  const lastChildCommentIndex = comments.findLastIndex((comment) => comment.parent._id === activeCommentId);
+  // id комментария, под которым показываем форму ответа (последний из дочерних у activeComment)
+  const lastChildCommentId = lastChildCommentIndex === -1 ? activeCommentId : comments[lastChildCommentIndex]?._id;
+
   return (
     <ul className={cn()}>
       {comments.map((item) => {
@@ -15,6 +19,7 @@ function CommentList({ comments, activeCommentId, newCommentId, isAuth, onAnswer
           <CommentItem
             comment={item}
             activeCommentId={activeCommentId}
+            lastChildCommentId={lastChildCommentId}
             newCommentId={newCommentId}
             key={item._id}
             isAuth={isAuth}

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, onCancelClick, onSendComment, onSignIn }) {
+function CommentForm({ activeCommentId, lastChildCommentId, activeCommentAuthor, isAuth, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentForm');
   const [message, setMessage] = useState('');
   
@@ -12,7 +12,7 @@ function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, onCancelCli
     const actionText = Boolean(activeCommentId) ? 'комментировать' : 'ответить';
 
     return (
-      <div className={cn('stub')}>
+      <div className={cn('', {shifted: activeCommentId === lastChildCommentId, active: Boolean(activeCommentId)})}>
         <a className={cn('login')} onClick={onSignIn}>Войдите </a>, чтобы иметь возможность {actionText}
         {
           activeCommentId &&
@@ -27,7 +27,7 @@ function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, onCancelCli
 
   return (
     <form
-      className={cn('')}
+      className={cn('', {shifted: activeCommentId === lastChildCommentId, active: Boolean(activeCommentId)})}
       onSubmit={(evt) => {
         evt.preventDefault();
         setMessage('');
@@ -60,6 +60,7 @@ CommentForm.propTypes = {
   isAuth: PropTypes.bool.isRequired,
   message: PropTypes.string,
   activeCommentId: PropTypes.string,
+  lastChildCommentId: PropTypes.string,
   activeCommentAuthor: PropTypes.string,
   onCancelClick: PropTypes.func,
   onMessageChange: PropTypes.func,
