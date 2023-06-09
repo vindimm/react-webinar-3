@@ -24,13 +24,7 @@ function Article() {
   // Параметры из пути /articles/:id
   const params = useParams();
 
-  useInit(() => {
-    dispatch(commentsActions.load(params.id));
-    dispatch(articleActions.load(params.id));
-  }, [params.id]);
-
-  // В лекции был показан вариант с использованием Promise.all для параллельного совершения запросов.
-  // Кажется что и без Promise.all запросы идут параллельно.
+  // В лекции был показан вариант с использованием Promise.all для параллельного совершения запросов
 
   // useInit(async () => {
   //   await Promise.all([
@@ -38,6 +32,12 @@ function Article() {
   //     dispatch(articleActions.load(params.id)),
   //   ]);
   // }, [params.id], true);
+
+  // Согласно вкладке "DevTools -> Network -> Waterfall" без Promise.all запросы тоже идут параллельно
+  useInit(() => {
+    dispatch(commentsActions.load(params.id));
+    dispatch(articleActions.load(params.id));
+  }, [params.id]);
 
   const select = useSelectorRedux(state => ({
     article: state.article.data,
