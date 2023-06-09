@@ -1,4 +1,5 @@
 import {memo, useState, useCallback, useMemo} from "react";
+import {useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import shallowequal from "shallowequal";
@@ -13,9 +14,9 @@ import CommentForm from "../../components/comments/comment-form";
 
 function CommentsBlock() {
   const [activeCommentId, setActiveCommentId] = useState('');
-  const [message, setMessage] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const selectStore = useSelector(state => ({
     isAuth: state.session.exists,
@@ -34,23 +35,21 @@ function CommentsBlock() {
      // Клик по кнопке "Ответить"
     onAnswerClick: useCallback((id) => {
       setActiveCommentId(id);
-      setMessage('');
     }, []),
      // Клик по кнопке "Отмена"
     onCancelClick: useCallback(() => {
       setActiveCommentId('');
-      setMessage('');
-    }, []),
-    // Изменения текста комментария
-    onMessageChange: useCallback((text) => {
-      setMessage(text);
     }, []),
     // Отправка комментария
-    onSendComment: useCallback(async () => {
+    onSendComment: useCallback((message) => {
       const type = activeCommentId ? 'comment' : 'article';
       const data = {text: message, parent: {_id: activeCommentId || selectRedux.articleId, _type: type}};
       dispatch(commentsActions.send(data));
-    }, [message, selectRedux.articleId]),
+    }, [activeCommentId]),
+    // Переход к авторизации
+    onSignIn: useCallback(() => {
+      navigate('/login', {state: {back: location.pathname}});
+    }, [location.pathname]),
   }
 
   let tree = [];
@@ -67,18 +66,16 @@ function CommentsBlock() {
         comments={newComments}
         activeCommentId={activeCommentId}
         isAuth={selectStore.isAuth}
-        message={message}
         onAnswerClick={callbacks.onAnswerClick}
         onCancelClick={callbacks.onCancelClick}
-        onMessageChange={callbacks.onMessageChange}
         onSendComment={callbacks.onSendComment}
+        onSignIn={callbacks.onSignIn}
       />
       {
         !activeCommentId &&
         <CommentForm
           isAuth={selectStore.isAuth}
-          message={message}
-          onMessageChange={callbacks.onMessageChange}
+          onSignIn={callbacks.onSignIn}
           onSendComment={callbacks.onSendComment}
         />
       }

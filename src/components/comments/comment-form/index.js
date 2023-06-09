@@ -1,18 +1,19 @@
-import {memo} from 'react';
+import {useState, memo} from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, message, onCancelClick, onMessageChange, onSendComment }) {
+function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentForm');
+  const [message, setMessage] = useState('');
   
   if (!isAuth) {
     const actionText = Boolean(activeCommentId) ? 'комментировать' : 'ответить';
 
     return (
       <div className={cn('stub')}>
-        <Link className={cn('login')} to={'/login'}>Войдите</Link>, чтобы иметь возможность {actionText}
+        <a className={cn('login')} onClick={onSignIn}>Войдите </a>, чтобы иметь возможность {actionText}
         {
           activeCommentId &&
           <button className={cn('cancelLink')} type="button" onClick={onCancelClick}>Отмена</button>
@@ -27,11 +28,10 @@ function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, message, on
   return (
     <form
       className={cn('')}
-      action="#"
-      method="post"
       onSubmit={(evt) => {
         evt.preventDefault();
-        onSendComment();
+        setMessage('');
+        onSendComment(message);
       }}
     >
       <fieldset className={cn('fieldset')}>
@@ -41,7 +41,7 @@ function CommentForm({ activeCommentId, activeCommentAuthor, isAuth, message, on
           rows="5"
           placeholder={placeholderText}
           value={message}
-          onChange={(evt) => onMessageChange(evt.target.value)}
+          onChange={(evt) => setMessage(evt.target.value)}
         >
         </textarea>
         <div className={cn('buttons')}>
@@ -64,6 +64,7 @@ CommentForm.propTypes = {
   onCancelClick: PropTypes.func,
   onMessageChange: PropTypes.func,
   onSendComment: PropTypes.func,
+  onSignIn: PropTypes.func,
 }
 
 CommentForm.defaultProps = {
@@ -72,6 +73,7 @@ CommentForm.defaultProps = {
   onCancelClick: () => {},
   onMessageChange: () => {},
   onSendComment: () => {},
+  onSignIn: () => {},
 }
 
 export default memo(CommentForm);

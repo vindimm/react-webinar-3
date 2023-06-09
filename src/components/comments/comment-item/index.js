@@ -6,7 +6,7 @@ import './style.css';
 
 import CommentForm from '../comment-form';
 
-function CommentItem({ comment, message, activeCommentId, isAuth, onAnswerClick, onCancelClick, onMessageChange, onSendComment }) {
+function CommentItem({ comment, activeCommentId, isAuth, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
   const cn = bem('CommentItem');
   const MAX_LEVEL = 6;
 
@@ -22,12 +22,11 @@ function CommentItem({ comment, message, activeCommentId, isAuth, onAnswerClick,
         activeCommentId === comment._id &&
         <CommentForm
           isAuth={isAuth}
-          message={message}
           activeCommentId={activeCommentId}
           activeCommentAuthor={comment.author.profile.name}
           onCancelClick={onCancelClick}
-          onMessageChange={onMessageChange}
           onSendComment={onSendComment}
+          onSignIn={onSignIn}
         />
       }
     </li>
@@ -36,13 +35,12 @@ function CommentItem({ comment, message, activeCommentId, isAuth, onAnswerClick,
 
 CommentItem.propTypes = {
   comment: PropTypes.object,
-  message: PropTypes.string,
   activeCommentId: PropTypes.string,
   isAuth: PropTypes.bool.isRequired,
   onHandleAnswer: PropTypes.func,
   onCancelClick: PropTypes.func,
-  onMessageChange: PropTypes.func,
   onSendComment: PropTypes.func,
+  onSignIn: PropTypes.func,
 }
 
 CommentItem.defaultProps = {
@@ -50,8 +48,8 @@ CommentItem.defaultProps = {
   activeCommentId: '',
   onHandleAnswer: () => {},
   onCancelClick: () => {},
-  onMessageChange: () => {},
   onSendComment: () => {},
+  onSignIn: () => {},
 }
 
 export default memo(CommentItem);

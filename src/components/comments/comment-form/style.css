@@ -39,6 +39,7 @@
 
   border-bottom: 1px solid #0087E9;
   color: #0087E9;
+  cursor: pointer;
 }
 
 .CommentForm-cancelLink {
