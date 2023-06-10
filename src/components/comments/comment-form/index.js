@@ -55,7 +55,7 @@ function CommentForm({ activeCommentId, lastChildCommentId, userId, onCancelClic
 }
 
 CommentForm.propTypes = {
-  userId: PropTypes.string.isRequired,
+  userId: PropTypes.string,
   message: PropTypes.string,
   activeCommentId: PropTypes.string,
   lastChildCommentId: PropTypes.string,
