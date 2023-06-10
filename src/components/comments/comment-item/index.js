@@ -6,7 +6,7 @@ import './style.css';
 
 import CommentForm from '../comment-form';
 
-function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentId, userId, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
+function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentId, userId, onAnswerClick, onCancelClick, onSendComment, onSignIn, t }) {
   const cn = bem('CommentItem');
   const MAX_LEVEL = 6;
   const PAD_SIZE = 30;
@@ -21,7 +21,7 @@ function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentI
         <span className={cn('created')}>{formatDate(comment.dateCreate)}</span>
       </div>
       <p className={cn('text')}>{comment.text}</p>
-      <button className={cn('answer')} onClick={() => onAnswerClick(comment._id)}>Ответить</button>
+      <button className={cn('answer')} onClick={() => onAnswerClick(comment._id)}>{t('comments.answer')}</button>
       {
         lastChildCommentId === comment._id &&
         <CommentForm
@@ -32,6 +32,7 @@ function CommentItem({ comment, activeCommentId, lastChildCommentId, newCommentI
           onCancelClick={onCancelClick}
           onSendComment={onSendComment}
           onSignIn={onSignIn}
+          t={t}
         />
       }
     </li>
@@ -47,6 +48,7 @@ CommentItem.propTypes = {
   onCancelClick: PropTypes.func,
   onSendComment: PropTypes.func,
   onSignIn: PropTypes.func,
+  t: PropTypes.func
 }
 
 CommentItem.defaultProps = {
@@ -56,6 +58,7 @@ CommentItem.defaultProps = {
   onCancelClick: () => {},
   onSendComment: () => {},
   onSignIn: () => {},
+  t: (text) => text
 }
 
 export default memo(CommentItem);

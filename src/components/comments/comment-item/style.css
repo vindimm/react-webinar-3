@@ -7,7 +7,7 @@
 
   font-size: 12px;
   /* Сделал шрифт крупнее на время разработки */
-  font-size:  16px
+  /* font-size:  16px */
 }
 
 .CommentItem-user {
@@ -28,7 +28,7 @@
   margin-bottom: 10px;
   font-size: 14px;
   /* Сделал шрифт крупнее на время разработки */
-  font-size:  18px;
+  /* font-size:  18px; */
   word-wrap: break-word;
 }
 
@@ -40,7 +40,7 @@
 
   font-size: 12px;
   /* Сделал шрифт крупнее на время разработки */
-  font-size:  16px;
+  /* font-size:  16px; */
   background-color: transparent;
   color: #0087E9;
   cursor: pointer;

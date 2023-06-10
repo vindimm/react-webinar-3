@@ -21,6 +21,7 @@ import CommentsBlock from '../../containers/comments-block';
 function Article() {
   const store = useStore();
   const dispatch = useDispatch();
+  const {lang} = useTranslate();
   // Параметры из пути /articles/:id
   const params = useParams();
 
@@ -37,7 +38,7 @@ function Article() {
   useInit(() => {
     dispatch(commentsActions.load(params.id));
     dispatch(articleActions.load(params.id));
-  }, [params.id]);
+  }, [params.id, lang]);
 
   const select = useSelectorRedux(state => ({
     article: state.article.data,

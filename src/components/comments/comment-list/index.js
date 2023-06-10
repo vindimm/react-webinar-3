@@ -5,7 +5,7 @@ import './style.css';
 
 import CommentItem from '../comment-item';
 
-function CommentList({ comments, activeCommentId, newCommentId, userId, onAnswerClick, onCancelClick, onSendComment, onSignIn }) {
+function CommentList({ comments, activeCommentId, newCommentId, userId, onAnswerClick, onCancelClick, onSendComment, onSignIn, t }) {
   const cn = bem('CommentList');
   // Находим индекс последнего прямого потомка для комментария, на который отвечаем.
   const lastChildCommentIndex = comments.findLastIndex((comment) => comment.parent._id === activeCommentId);
@@ -27,6 +27,7 @@ function CommentList({ comments, activeCommentId, newCommentId, userId, onAnswer
             onCancelClick={onCancelClick}
             onSendComment={onSendComment}
             onSignIn={onSignIn}
+            t={t}
           />
         )
       })}
@@ -43,6 +44,7 @@ CommentList.propTypes = {
   onCancelClick: PropTypes.func,
   onSendComment: PropTypes.func,
   onSignIn: PropTypes.func,
+  t: PropTypes.func
 }
 
 CommentList.defaultProps = {
@@ -52,6 +54,7 @@ CommentList.defaultProps = {
   onCancelClick: () => {},
   onSendComment: () => {},
   onSignIn: () => {},
+  t: (text) => text
 }
 
 export default memo(CommentList);

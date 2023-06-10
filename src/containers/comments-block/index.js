@@ -1,6 +1,7 @@
 import {memo, useState, useCallback, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import useSelector from "../../hooks/use-selector";
+import useTranslate from "../../hooks/use-translate";
 import {useDispatch, useSelector as useSelectorRedux} from 'react-redux';
 import shallowequal from "shallowequal";
 import commentsActions from '../../store-redux/comments/actions';
@@ -17,6 +18,7 @@ function CommentsBlock() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {t} = useTranslate();
 
   const selectStore = useSelector(state => ({
     userId: state.session.user._id,
@@ -77,7 +79,7 @@ function CommentsBlock() {
 
 
   return (
-    <CommentLayout count={selectRedux.commentsCount}>
+    <CommentLayout count={selectRedux.commentsCount} t={t}>
       <CommentList
         comments={newComments}
         activeCommentId={activeCommentId} // комментарий, на который собираемся ответить
@@ -87,6 +89,7 @@ function CommentsBlock() {
         onCancelClick={callbacks.onCancelClick}
         onSendComment={callbacks.onSendComment}
         onSignIn={callbacks.onSignIn}
+        t={t}
       />
       {
         !activeCommentId &&
@@ -94,6 +97,7 @@ function CommentsBlock() {
           userId={selectStore.userId}
           onSignIn={callbacks.onSignIn}
           onSendComment={callbacks.onSendComment}
+          t={t}
         />
       }
     </CommentLayout>
