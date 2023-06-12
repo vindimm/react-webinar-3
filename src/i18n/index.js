@@ -33,6 +33,7 @@ class I18nService {
 
   setLang(value) {
     this.lang = value;
+    this.services.api.setHeader('Accept-Language', value);
     for (const listener of this.listeners) {
       listener(this.lang);
     }

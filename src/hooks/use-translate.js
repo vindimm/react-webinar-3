@@ -14,7 +14,6 @@ export default function useTranslate() {
   const changeLang = (value) => {
     setLang(value);
     i18n.setLang(value);
-    api.setHeader('Accept-Language', value);
   };
 
   const unsubscribe = useMemo(() => {
